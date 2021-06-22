@@ -1,0 +1,60 @@
+{% extends 'eval_app/_base.html' %}
+{% load static %}
+
+
+
+{% block headblock %}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .column {
+        float: center;
+        width: 5%;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    img:hover {
+        opacity: 0.5;
+    }
+</style>
+{% endblock %}
+
+
+{% block body%}
+<br>
+
+<center>
+    <div class="row" id="rowpic">
+
+        {% for i in elist %}
+        <div class="column" width="50" id="colpic">
+            <a href="{% url 'eval-CommentLead' i.employee_id %}">
+                <img src="http://qg1703cm0163.mhi.co.jp:81/static/main_hr/img/{{i.pic}}" class="img-fluid" alt="Snow"
+                    style="border:3px solid {{i.color}}" height="80" width="80">
+                <center>
+                    <p style="color:black;">{{i.nick_name}}<br>{{i.project}}</p>
+                </center>
+            </a>
+        </div>
+
+        {% endfor %}
+
+
+
+    </div>
+</center>
+{% endblock %}
+
+{% block jsblock %}
+
+<script src="{% static 'eval_app/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+
+
+{% endblock %}

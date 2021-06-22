@@ -1,0 +1,66 @@
+{% extends 'management_main/base.html' %}
+
+{% load static %}
+
+
+{% block body %}
+
+
+<div class="row">
+    
+    {% for i in messages_managers %}
+    <div class="card col-12">
+        <div class="modal-footer row justify-content-center bg-dark">
+            <h6>Click "X" button above to close</h6><span class="sr-only">(current)</span></a></button>
+           </div>
+        <div class="card card-primary card-outline">
+            <div class="card card-pimarry card-outline">
+                <div class="card-header bg-primary">
+                    <div class="card-title">
+                        <h5>{{i.title}}</h5>
+                    </div>
+                    <h4><span class="mailbox-read-time float-right">{{i.date}}</span></h4>
+                </div>
+            </div>
+            <div style="background-color: rgb(228, 222, 208);">
+                <p>
+                <h3>{{i.body1}}</h3>
+                </p>
+                <center>
+                    <img src="{{i.pic1.url}}" width="1300">
+                </center>
+
+            </div>
+            <div style="background-color: rgb(228, 222, 208);">
+                <p>
+                <h3>{{i.body2}}</h3>
+                </p>
+                <center>
+                    <img src="{{i.pic2.url}}" alt="" width="1300">
+                </center>
+
+            </div>
+            <div style="background-color: rgb(228, 222, 208);">
+                <p>
+                <h3>{{i.body3}}</h3>
+                </p>
+                <center>
+                    <img src="{{i.pic3.url}}" alt="" width="1300">
+                </center>
+
+            </div>
+            <div style="background-color: rgb(228, 222, 208);">
+                <p>
+                <h3>{{i.body4}}</h3>
+                </p>
+                <center>
+                    <img src="{{i.pic4.url}}" alt="" width="1300">
+                </center>
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div><br><br><br><br><br><br><br>
+
+{% endblock %}

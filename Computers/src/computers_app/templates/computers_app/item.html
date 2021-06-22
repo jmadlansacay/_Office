@@ -1,0 +1,47 @@
+{% extends 'computers_app/_base.html' %}
+{% load static %}
+
+
+
+
+
+{% block mainblock %}
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Circle Buttons</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% load widget_tweaks %}    
+                    <label class="mt-2">Item Code</label>
+                    {{form.item_code|attr:"class:form-control mb-2"}}
+                    <label class="mt-2">Item model</label>
+                    {{form.item_model|attr:"class:form-control mb-2"}}
+                    <label class="mt-2">Device Name</label>
+                    {{form.device_name|attr:"class:form-control mb-2"}}
+                    <label class="mt-2">Serial</label>
+                    {{form.serial_number|attr:"class:form-control mb-2"}}
+                    <label class="mt-2">User</label>
+                    {{form.item_user|attr:"class:form-control mb-2"}}
+                    <label class="mt-2">Status</label>
+                    {{form.item_status|attr:"class:form-control mb-2"}}
+                    <button type="submit" class="btn btn-md btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+
+
+   
+</div>
+{% endblock %}

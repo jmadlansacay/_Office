@@ -1,0 +1,168 @@
+{% extends 'amonitoring_app/_base.html' %}
+{% load static %}
+
+
+
+{% block headblock %}
+<style>
+    img {
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block bodyblock %}
+<div class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <br>
+                <h1 class="text-dark"> Details - {{udetails.nick_name}} - {{dt}} </h1>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <br>
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="card card-widget widget-user">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-info">
+                        <h2 class="widget-user-username">{{udetails.last_name}}, {{udetails.first_name}}</h2>
+                    </div>
+
+                    <div class="widget-user-image">
+                        <img src="http://qg1703cm0163.mhi.co.jp:81/static/main_hr/img/{{udetails.pic}}" alt="Avatar" style="width:100px">
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">Time In</h5>
+                                    <span class="description-text">{{time_in}}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">Time Out</h5>
+                                    <span class="description-text">{{time_out}}</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4">
+                                <div class="description-block">
+                                    <h3 class="description-header"></h3>
+                                    <span class="description-text"></span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Message</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <p class="text-muted">
+                            {{msg}}
+                        </p>
+
+                        <hr>
+                        {% if owner == 1 %}
+
+                        <a href="#" class="btn btn-primary btn-sm">Update Message</a>
+                        {% else %}
+
+                        {% endif %}
+
+
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Info</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+
+                        <div class="card-body">
+
+
+                            <label>Reason for leave/halfday/late</label>
+                            {% if access == 1 %}
+                            <textarea class="form-control" rows="3" name="reason" id="reason">{{reason}}</textarea>
+                            {% else %}
+                            <p class="text-muted">
+                                {{ reason }}
+                            </p>
+                            {% endif %}
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+
+                            {% if hd == 2 %}
+                            <select class="form-control col-sm-6" name="halfday" id="halfday">
+                                <option value="2" selected>Absent</option>
+                                <option value="1">Halfday/Late</option>
+                                <option value="0"></option>
+                            </select>
+                            {% elif hd == 1 %}
+                            <select class="form-control col-sm-6" name="halfday" id="halfday">
+                                <option value="2">Absent</option>
+                                <option value="1" selected>Halfday/Late</option>
+                                <option value="0"></option>
+                            </select>
+                            {% else %}
+                            <select class="form-control col-sm-6" name="halfday" id="halfday">
+                                <option value="2">Absent</option>
+                                <option value="1">Halfday/Late</option>
+                                <option value="0" selected></option>
+                            </select>
+                            {% endif %}
+                            <br>
+                            {% if access == 1 %}
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            {% endif %}
+                            <a href="#" class="btn btn-default">Close</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+
+
+</div>
+<!-- /.table-responsive -->
+
+{% endblock %}

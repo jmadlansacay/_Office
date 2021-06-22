@@ -1,0 +1,350 @@
+{% extends 'HReval_eval/base.html'%}
+{% load static%}
+
+{% block head %}
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+
+<!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+
+<!-- Stylesheets -->
+<!-- Bootstrap is included in its original form, unaltered -->
+<link rel="stylesheet" href="{% static 'back/css/bootstrap.min.css' %}">
+
+<!-- Related styles of various icon packs and plugins -->
+<link rel="stylesheet" href="{% static 'back/css/plugins.css' %}">
+
+<!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+<link rel="stylesheet" href="{% static 'back/css/main.css' %}">
+
+<!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+<!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+<link rel="stylesheet" href="{% static 'back/css/themes.css' %}">
+
+<script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+
+
+<!-- END Stylesheets -->
+
+<!-- Modernizr (browser feature detection library) -->
+<script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+
+  <title>ProUI - Responsive Bootstrap Admin Template</title>
+
+  <meta name="description"
+    content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.">
+  <meta name="author" content="pixelcave">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+
+  <!-- Icons -->
+  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+  <link rel="shortcut icon" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icon57.png" sizes="57x57">
+  <link rel="apple-touch-icon" href="img/icon72.png" sizes="72x72">
+  <link rel="apple-touch-icon" href="img/icon76.png" sizes="76x76">
+  <link rel="apple-touch-icon" href="img/icon114.png" sizes="114x114">
+  <link rel="apple-touch-icon" href="img/icon120.png" sizes="120x120">
+  <link rel="apple-touch-icon" href="img/icon144.png" sizes="144x144">
+  <link rel="apple-touch-icon" href="img/icon152.png" sizes="152x152">
+  <link rel="apple-touch-icon" href="img/icon180.png" sizes="180x180">
+  <!-- END Icons -->
+
+  <!-- Stylesheets -->
+  <!-- Bootstrap is included in its original form, unaltered -->
+  <link rel="stylesheet" href="{% static 'back/css/bootstrap.min.css' %}">
+
+  <!-- Related styles of various icon packs and plugins -->
+  <link rel="stylesheet" href="{% static 'back/css/plugins.css' %}">
+
+  <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+  <link rel="stylesheet" href="{% static 'back/css/main.css' %}">
+
+  <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+  <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+  <link rel="stylesheet" href="{% static 'back/css/themes.css' %}">
+  <!-- END Stylesheets -->
+
+  <!-- Modernizr (browser feature detection library) -->
+  <script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+  <style>
+    #legend {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      background-color: rgb(250, 245, 245);
+    }
+
+    #legend td,
+    #legend th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #legend tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #legend tr:hover {
+      background-color: rgb(204, 191, 191);
+    }
+
+    #legend th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #2b7ace;
+      color: rgb(226, 209, 209);
+    }
+  </style>
+
+
+  <style>
+    #header-wrap {
+      position: fixed;
+      height: 200px;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+  </style>
+
+
+  <!--Fixed Table Header-->
+
+  <style>
+    /* Standard Tables */
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      border: 0.1em solid #d6d6d6;
+    }
+
+
+    th,
+    td {
+      padding: 0.25em 0.5em 0.25em 1em;
+      vertical-align: text-top;
+      text-align: left;
+    }
+
+    th {
+      vertical-align: bottom;
+      background-color: rgb(58, 57, 57);
+      color: #fff;
+    }
+
+
+    /* Fixed Headers */
+
+    th {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    th[scope=row] {
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+    }
+
+    th[scope=row] {
+      vertical-align: top;
+      color: inherit;
+      background-color: inherit;
+      background: linear-gradient(90deg, transparent 0%, transparent calc(100% - .05em), #d6d6d6 calc(100% - .05em), #d6d6d6 100%);
+    }
+  </style>
+
+  <style>
+    #header-wrap {
+      position: fixed;
+      height: 200px;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    #container {
+      margin-top: 200px;
+    }
+  </style>
+
+  <style>
+    input[type=radio] {
+      display: block;
+      margin: 0 auto;
+
+    }
+
+    ul li {
+      display: inline-block;
+    }
+  </style>
+</head>
+
+
+
+
+
+<body>
+
+  <!-- Main Container -->
+  <div id="main-container">
+
+
+
+
+
+    <!-- Page content -->
+    <div id="page-content">
+      <div class="text-center content-header">
+
+       
+
+        <div class="header-section"><br>
+
+          <div class="card mb-3">
+            <div class="row no-gutters">
+              <div class="col-md-2 align-self-center">
+                <img src="{% static 'img/' %}{{employee.pic}}" alt="avatar" height="100" width="100"><br>
+                
+              </div><br>
+
+              <div class="col-md-10">
+                <div class="card-body">
+                  <a class="btn btn-primary btn-block"><b></b>
+                    <h6>DIVISION / DEPARTMENT / SECTION: {{evalinfo.project_area}}</h6></b>
+                  </a><br><br>
+
+                  <form action="page_forms_general.html" method="post" class="form-horizontal form-bordered"
+                    onsubmit="return false;">
+
+                    <div>
+                      <label class="col-sm-4 ">FULL NAME(nickname): {{employee.last_name}}, {{employee.first_name}}
+                        ({{employee.nickname}})</label>
+                    </div>
+                    <div>
+                      <label class="col-sm-4 ">EMPLOYEE NUMBER: {{employee.employee_id}}</label>
+                    </div>
+                    <div>
+                      <label class="col-sm-4 ">EMPLOYEE CATEGORY: {{employee.employee_type}}</label>
+                    </div>
+
+                    <div>
+                      <label class="col-sm-4">DATE HIRED: {{employee.date_employed}}</label>
+                    </div>
+                    <div>
+                      <label class="col-sm-4">AGE: {{age}}</label>
+                    </div>
+                    <div>
+                      <label class="col-sm-4">YEARS OF SERVICE: {{yos}} yr/s</label>
+
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+              <a class="btn btn-primary btn-block text-center " style="color: rgb(11, 37, 107);" href="{% url 'index' %}"><b>Home</b></a>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+  <!-- END Page Content -->
+
+
+
+  <!-- Footer -->
+
+  <!-- END Footer -->
+  </div>
+  <!-- END Main Container -->
+  </div>
+  <!-- END Page Container -->
+  </div>
+  <!-- END Page Wrapper -->
+
+  <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
+  <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+
+  <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+  <script src="{% static 'backjs/vendor/jquery.min.js' %}"></script>
+  <script src="{% static 'backjs/vendor/bootstrap.min.js' %}"></script>
+  <script src="{% static 'backjs/plugins.js' %}"></script>
+  <script src="{% static 'backjs/app.js' %}"></script>
+
+  <!-- Load and execute javascript code used only in this page -->
+  <script src="{% static 'backjs/pages/formsGeneral.js' %}"></script>
+  <script>$(function () { FormsGeneral.init(); });</script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+<script src="{% static 'back/js/vendor/jquery.min.js' %}"></script>
+<script src="{% static 'back/js/vendor/bootstrap.min.js' %}"></script>
+<script src="{% static 'back/js/plugins.js' %}"></script>
+<script src="{% static 'back/js/app.js' %}"></script>
+<script src="{% static 'back/js/pages/formsGeneral.js' %}"></script>
+<script>$(function () { FormsGeneral.init(); });</script>
+
+
+
+
+
+<script src="{% static 'back/js/pages/index.js' %}"></script>
+<script>$(function () { Index.init(); });</script>
+
+
+
+
+
+{% endblock %}

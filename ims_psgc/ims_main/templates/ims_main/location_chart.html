@@ -1,0 +1,109 @@
+{% extends 'ims_main/base.html' %}
+{% load static %}
+
+
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                Designer
+            </div>
+            <div class="card-body">
+                <div id="designer"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                Checker
+            </div>
+            <div class="card-body">
+                <div id="checker"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    
+</div>
+
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'ims_main/js/highcharts.src.js'%}"></script>
+<script>
+    Highcharts.chart('designer', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: ''
+    },
+    xAxis: {
+        categories: {{designer_category|safe}}
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: ''
+        }
+    },
+    tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+        shared: true
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal'
+        }
+    },
+    series: {{designerseries|safe}}
+});
+     
+</script>
+
+<script>
+    Highcharts.chart('checker', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: ''
+    },
+    xAxis: {
+        categories: {{checker_category|safe}}
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: ''
+        }
+    },
+    tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+        shared: true
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal'
+        }
+    },
+    series: {{checkerseries|safe}}
+});
+     
+</script>
+
+{% endblock %}

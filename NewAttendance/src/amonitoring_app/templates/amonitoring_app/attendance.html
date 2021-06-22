@@ -1,0 +1,58 @@
+{% extends 'amonitoring_app\_base.html' %}
+{% load static %}
+
+{% block headblock %}
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .column {
+    float: center;
+    width: 4.5%;
+  }
+
+  /* Clearfix (clear floats) */
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+</style>
+{% endblock %}
+
+{% block bodyblock %}
+<br>
+<div class="container">
+  <div class="row ">
+    <div class="col-sm-6">
+      <h1 class="m-0 text-dark"> Attendance - {{dt}}</h1>
+    </div><!-- /.col -->
+  
+  </div><!-- /.row -->
+</div>
+<br>
+<small class="badge badge-danger">Red - Not in Office</small> <small class="badge badge-success">Green - In
+  Office</small>
+<small class="badge badge-primary">Blue - Work from Home </small> <small class="badge badge-warning">Orange -
+  Halfday/Late</small>
+<br>
+<br>
+<div class="row" id="rowpic">
+
+  {% for i in attend %}
+  <div class="column" width="80" id="colpic">
+    <a href="#">
+      <img src="http://qg1703cm0163.mhi.co.jp:81/static/main_hr/img/{{i.pic}}" class="img-fluid" alt="Snow"
+        style="border:4px solid {{i.color}}" height="80" width="80">
+
+      <center>
+        <p style="color:{{i.color}};">{{i.nick_name}}</p>
+      </center>
+    </a>
+
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

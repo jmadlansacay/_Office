@@ -1,0 +1,274 @@
+{% extends 'eval_app/_base.html' %}
+{% load static %}
+
+
+
+{% block headblock %}
+
+{% endblock %}
+
+
+{% block body%}
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ formset.management_form }}
+  <br>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal-xl">
+            Legend
+          </button>
+          <button class="btn btn-primary" type="submit">Save</button>
+
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 750px;">
+          <table class="table table-head-fixed table-bordered">
+            <thead>
+              <tr>
+                <th>PROCESS</th>
+                <th>WHAT</th>
+                <th>Self Check</th>
+                <th>ACTIONS TO BE TAKEN</th>
+              </tr>
+            </thead>
+            {% load widget_tweaks %}
+            <tbody>
+              {{ formset.management_form }}
+              {% for form in formset %}
+              <tr>
+                <td>{{form.instance.criteria.sub_category.category}}</td>
+                <td>{{form.instance.criteria}}{{form.criteria|attr:"hidden"}}</td>
+                <td>{{form.self_rating}}{{form.id}}{{form.area_lead_rating|attr:"hidden"}}
+                  {{form.project_lead_rating|attr:"hidden"}}{{form.manager_rating|attr:"hidden"}}</td>
+                <td>{{form.actions|attr:"class:form-control"}}</td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+
+</form>
+
+<div class="modal fade" id="modal-xl">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Legend</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Bordered Table</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table class="table table-head-fixed table-bordered">
+                    <thead>
+                      <tr>
+                        <th width="5%" class="text-center " style="background-color: #af1f56;">LEVEL</th>
+                        <th width="4%" style="background-color: #1f71af;">ADMINISTRATIVE</th>
+                        <th width="25%" style="background-color: #1f71af; vertical-align: middle;">DESCRIPTION</th>
+                        <th width="5%" style="background-color: #288d6f; vertical-align: middle;">TECHNICAL SKILLS</th>
+                        <th width="25%" style="background-color: #288d6f; vertical-align: middle;">DESCRIPTION</th>
+                        <th width="5%" style="background-color: #887a0f; vertical-align: middle;">SOFTWARE</th>
+                        <th width="25%" style="background-color: #887a0f; vertical-align: middle;">DESCRIPTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-center" style="background-color: #b33b69;">#</td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Not
+                          Applicable
+                        </td>
+                        <td style="background-color: #3593dc;"></td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Not
+                          Applicable
+                        </td>
+                        <td class="text-center" style="background-color: #60b69c;"></td>
+                        <td class="text-center" style="background-color: #aaa267;">Not Applicable</td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;"></td>
+                      </tr>
+                      <tr>
+                        <td class="text-center" style="background-color: #b33b69; vertical-align: middle;">
+                          <h3>0</h3>
+                        </td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Do Not Meet
+                          Expectations</td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Objectives
+                          and
+                          standards are consistently not met. Consistently fails to meet performance expectations. Needs
+                          significant improvement.
+                          Has been on the job long enough to have shown better performance. Excessive attention by
+                          supervisor is required. Does not grasp situation when explained.
+                          Corrective action is required.
+                        </td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">No Experience
+                        </td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">No knowledge
+                          or
+                          idea regarding the skill. There are plan to acquire the skill for his/her future work</td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">No Experience
+                        </td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Unable to
+                          perform
+                          technical skills.</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center" style="background-color: #b33b69; vertical-align: middle;">
+                          <h3>1</h3>
+                        </td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Approaches
+                          Expectations</td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Objectives
+                          and
+                          standards are generally met but full results are not totally achieved. Occasionally falls
+                          short of
+                          consistently meeting performance expectations and standards.
+                          Some performance aspects were not met – needs slight improvement. Could result from being
+                          newly
+                          appointed to the position – continuing to learn all aspects of the position
+                        </td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Beginner</td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">With
+                          knowledge or
+                          understanding of the basic techniques and concepts of skill but not applied to actual work
+                        </td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Basic</td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Basic ability
+                          or
+                          knowledge in technical skills.</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center" style="background-color: #b33b69; vertical-align: middle;">
+                          <h3>2</h3>
+                        </td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Meets
+                          Expectations</td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Performance
+                          is
+                          what is expected of a fully qualified and experienced person in this position. All objectives
+                          and
+                          standards are met.
+                          Consistently meets all performance expectations and standards. Job well done. Errors are
+                          minimal
+                          and seldom repeated.
+                          Prioritizes problems and projects well. Requires normal supervision and follow-up. Almost
+                          always
+                          completes work or projects on schedule.
+                        </td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Can Do the
+                          Job
+                          with Supervision</td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Can be able
+                          to
+                          successfully complete task as requested; help from knowledgeable person may be required from
+                          time
+                          to time.</td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Intermediate
+                        </td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Able to
+                          perform
+                          technical skills at a basic level and has some direct experience. Needs help from
+                          knowledgeable
+                          person from time to time.</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center" style="background-color: #b33b69; vertical-align: middle;">
+                          <h3>3</h3>
+                        </td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Exceeds
+                          Expectations</td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Frequently
+                          exceeds job requirements. Makes contributions well beyond job demands. Seizes initiative in
+                          development and implementation of challenging work goals.
+                          Each project or job is done thoroughly and on time. Thinks beyond details of the job, working
+                          toward the overall goals of the component.
+                        </td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Can Do the
+                          Job
+                          without Supervision</td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Can perform
+                          task
+                          without assistance and recognize within the group as "a person to ask" when difficult question
+                          arises related to task</td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Proficient
+                        </td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Capable and
+                          experienced to technical skills. Can be able to operate independently.</td>
+                      </tr>
+                      <tr>
+                        <td class="text-center" style="background-color: #b33b69; vertical-align: middle;">
+                          <h3>4</h3>
+                        </td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Outstanding
+                        </td>
+                        <td class="text-center" style="background-color: #3593dc; vertical-align: middle;">Objectives
+                          and
+                          standards are clearly and substantially surpassed. Consistently and significantly exceeds all
+                          performance expectations and standards.
+                          Highest performance level. Demonstrates a personal commitment to a high level of performance
+                          and
+                          results, even under challenging work goals.</td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Can Check
+                          Output
+                          and Train other Member</td>
+                        <td class="text-center" style="background-color: #60b69c; vertical-align: middle;">Known to be
+                          an
+                          expert and can provide guidance , can train other members, can check the output, troubleshoot
+                          and
+                          answer question related to area of expertise and the fields where skill is used;</td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Expert
+                          (Trainer)
+                        </td>
+                        <td class="text-center" style="background-color: #aaa267; vertical-align: middle;">Fully capable
+                          and
+                          experienced and seen as a subject matter expert. Needs no assistance to complete task and has
+                          the
+                          ability to lead and train others.</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</div>
+  {% endblock %}
+
+
+  {% block jsblock %}
+
+
+
+  {% endblock %}

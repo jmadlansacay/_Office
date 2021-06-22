@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'lte/dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
+
+    <title>Health Checklist</title>
+
+
+</head>
+
+<style>
+
+</style>
+
+<body>
+    {% load widget_tweaks %}
+    <form method="POST">
+
+        {% csrf_token %}
+        <div class=" row ">
+            <div class="col">
+                <div>
+
+                    <div class="card-body ">
+                        <div class="card card-danger card-outline">
+                            <div class="card-body box-profile" style="background-color: rgb(158, 186, 228) ;">
+                                <!-- rgb(158, 186, 228 -->
+                                <div class="text-center">
+                                    <h4>Health Checklist</h4>
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="{% static 'main_hr/img/' %}{{user.picture}}" alt="User profile picture">
+                                </div>
+                                <h3 class="profile-username text-center">{{user.last_name}}, {{user.first_name}}
+                                    {{user.middle_name}}</h3>
+
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li>
+                                        <b>Residence</b> <a class="float-right">27F Robinsons Equitable Tower</a>
+                                    </li>
+                                    <li>
+                                        <b>Sex</b> <a class="float-right">{{user.gender}}</a>
+                                    </li>
+                                    <li>
+                                        <b>Age</b> <a class="float-right">{{age}}</a>
+                                    </li>
+                                    <li>
+                                        <b>Date</b> <a class="float-right">{{td}}</a>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <div class="">
+                                <div class="card card-secondary card-outline">
+                                    <div class="card-body" style="background-color:  rgb(158, 186, 228);">
+                                        <div>
+                                            <ul class="list-group list-group-unbordered mb-3">
+                                                <div>
+                                                    <label>
+                                                        <p>Nature of Visit: (Please check one)</p>
+                                                    </label>
+                                                    <div class="col-2">
+                                                       
+                                                        {{form.nature_of_visit|attr:"class:custom-select"}}
+
+
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                        <div hidden>
+                                            {{ form.employee|attr:"class:hidden"}}
+                                            {{ form.checklist_date|attr:"class:hidden"}}
+                                        </div>
+
+                                        <div>
+                                            <ul class="list-group list-group-unbordered mb-3">
+                                                <div>
+                                                    <label>
+                                                        <p>Are you done with our body temperature check at the office
+                                                            entrance?</p>
+                                                    </label>
+                                                    <div class="col-1">
+                                                        <!-- <select class="custom-select">
+                                                        <option>Yes</option>
+                                                        <option>No</option>
+                                                    </select> -->
+                                                        {{form.body_temp_check|attr:"class:custom-select"}}
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                        </div>
+
+                                        <br>
+                                        <h6><b>Company :</b> Mitsubishi Heavy Industries Asia Pacific Pte. Ltd. - Manila
+                                            Branch
+                                            </p>
+                                        </h6>
+                                        <p>
+                                        <h6><b>Address :</b> 27F Robinsons Equitable Tower, ADB Ave., corner Poveda St.,
+                                            Ortigas
+                                            Center, Pasig City, Philippines 1605</p>
+                                        </h6>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="">
+                                <div class="card card-danger card-outline">
+                                    <div class="card-body" style="background-color: rgb(158, 186, 228);">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <ul class="list-group list-group-unbordered mb-3">
+                                                    <b>
+                                                        <p>1. Are you Experiencing : (nakakaranas ka ba ng:)</p>
+                                                    </b>
+                                                </ul>
+                                                <div class="col-12">
+                                                    <ul class="list-group list-group-unbordered mb-3">
+
+                                                        <ul class="list-group list-group-unbordered mb-3">
+                                                            <div>
+                                                                <label>
+                                                                    <p>a. Sore throat (pananakit ng lalamunan/masakit
+                                                                        lumunok)</p>
+                                                                </label>
+                                                                <div class="col-2">
+                                                                    {{form.sore_throat|attr:"class:custom-select"}}
+                                                                </div>
+                                                            </div>
+                                                        </ul>
+                                                    </ul>
+                                                    <ul class="list-group list-group-unbordered mb-3">
+                                                        <div>
+                                                            <label>
+                                                                <p>b. Body Pains (pananakit ng katawan)</p>
+                                                            </label>
+                                                            <div class="col-2">
+                                                                {{form.body_pain|attr:"class:custom-select"}}
+                                                            </div>
+                                                        </div>
+                                                    </ul>
+                                                    <ul class="list-group list-group-unbordered mb-3">
+                                                        <div>
+                                                            <label>
+                                                                <p>c. Headache (pananakit ng ulo)</p>
+                                                            </label>
+                                                            <div class="col-2">
+                                                                {{form.head_ache|attr:"class:custom-select"}}
+                                                            </div>
+                                                        </div>
+                                                    </ul>
+                                                    <ul class="list-group list-group-unbordered mb-3">
+                                                        <div>
+                                                            <label>
+                                                                <p>d. Fever for the past few days (lagnat sa mga
+                                                                    nakaraang araw)</p>
+                                                            </label>
+                                                            <div class="col-2">
+                                                                {{form.fever|attr:"class:custom-select"}}
+                                                            </div>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <hr>
+
+                                            <div class="col-6">
+                                                <ul class="list-group list-group-unbordered mb-3">
+                                                    <div>
+                                                        <label>2. Have your worked together or stayed in a close
+                                                            environment of
+                                                            a confirmed COVID-19
+                                                            case? (May naksama ka ba or may nakatrabahong tao n
+                                                            kumpirmadong may
+                                                            COVID-19 impeksyon?)
+                                                        </label>
+                                                        <div class="col-2">
+                                                            {{form.question_two|attr:"class:custom-select"}}
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                                <ul class="list-group list-group-unbordered mb-3">
+                                                    <div>
+                                                        <label>3. Have you had any contact with anyone with fever,
+                                                            cough, colds
+                                                            and sore throat in the past
+                                                            2 weeks? (Mayroon ka bang nakasama na may lagnat, ubo,
+                                                            sipon, o
+                                                            sakit ng lalamunan sa nakalipas
+                                                            ng dalawang linggo?)
+                                                        </label>
+                                                        <div class="col-2">
+                                                            {{form.question_three|attr:"class:custom-select"}}
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                                <ul class="list-group list-group-unbordered mb-3">
+                                                    <div>
+                                                        <label>4. Have you travelled outside the Phillipines for the
+                                                            last
+                                                            two weeks? (Ikaw ba an
+                                                            nagbyahe sa labas ng Pilipinas sa nakalipas na dalawang
+                                                            linggo?)
+                                                        </label>
+                                                        <div class="col-2">
+                                                            {{form.question_four|attr:"class:custom-select"}}
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                                <ul class="list-group list-group-unbordered mb-3">
+                                                    <div>
+                                                        <label>5. Have you travelled to any area in NCR aside from your
+                                                            home? (Ikaw ba ay
+                                                            nagpunta sa ibang parte ng NCR o Metro Manila bukod sa iyong
+                                                            bahay?) Sabihin kung saan:
+                                                        </label>
+                                                        <div class="col-2">
+                                                            {{form.question_five|attr:"class:custom-select"}}
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="row">
+                                               
+                                                       
+                                                            I Hereby authorized MHI-AP Manila Branch to collect and
+                                                            process the data indicated
+                                                            herein for the purpose of effecting control of COVID-19
+                                                            infection. I understand
+                                                            that my personal information is protected by RA 10173, Data
+                                                            Privacy Act of 2012,
+                                                            and that i am required by RA 11469, Bayanihan to Heal as One
+                                                            Act, to provide information.
+                                                        
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="card-footer" style="text-align:center;">
+                                            <h5>I declare the above answers are true and honest.</h5>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+</body>
+
+<!-- Bootstrap -->
+<script src="{% static 'lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'lte/dist/js/adminlte.js' %}"></script>
+
+</html>

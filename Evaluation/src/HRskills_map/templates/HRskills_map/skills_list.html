@@ -1,0 +1,66 @@
+{% extends 'HRskills_map/base.html' %}
+{% load static %}
+
+
+{% block head %}
+<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
+{% endblock %}
+
+
+
+{% block body %}
+<br>
+{% if skilltree.access == 5 or skilltree.access == 4 %}
+<a href="{% url 'export_skills' %}">Export to excel</a>
+{% endif %}
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Area</th>           
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employees %}
+            <tr>
+                <td>{{employee.employee.employee_id}}</td>
+                <td>{{employee.employee.last_name}}, {{employee.employee.first_name}}</td>
+                <td>{{employee.project_area}}</td>
+                <td><a class="btn btn-info btn-sm" href="{% url 'skills_map' employee.employee.employee_id %}">
+                    <i class="fas fa-pencil-alt">
+                    </i>
+                    Evaluate
+                </a></td>
+                
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Area</th>
+            <th>Action</th>
+        </tr>
+    </tfoot>
+</table>
+
+{% endblock %}
+
+
+{% block footer %}
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+{% endblock %}

@@ -1,0 +1,481 @@
+{% extends 'mhiap_hr/hr_base.html'%}
+{% load static %}
+
+
+
+{% block headblock %}
+<title>MHIAP | HR Edit</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/plugins/fontawesome-free/css/all.min.css' %}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/css/ionicons.min.css' %}">
+<!-- daterange picker -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/plugins/daterangepicker/daterangepicker.css' %}">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet"
+  href="{% static 'mhiap_hr_ref/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css' %}">
+<!-- Tempusdominus Bbootstrap 4 -->
+<link rel="stylesheet"
+  href="{% static 'mhiap_hr_ref/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+<!-- Bootstrap4 Duallistbox -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/dist/css/adminlte.min.css' %}">
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+
+{% endblock %}
+
+
+
+
+{% block bodyheaderblock %}
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <p style="font-size:30px">
+          <img class="profile-user-img img-fluid img-circle" src="{{hrdb.pic.url}}" alt="User profile picture">
+          Name: {{hrdb.last_name}}, {{hrdb.first_name}} ({{hrdb.nickname}})</p>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'hr_index' %}">Home</a></li>
+          <!-- <li class="breadcrumb-item active">Dashboard v1</li> -->
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+{% endblock %}
+
+
+
+
+
+
+{% block bodyblock %}
+
+<form method="POST">
+  {% csrf_token %}
+  {% load widget_tweaks %}
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Basic Info</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+              title="Collapse">
+              <i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="card-body" style="display: block;">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Employee Type</label>
+                {{ form.employee_type|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <div class="form-group">
+                <label>ID</label>
+                {{ form.employee_id.errors }}
+                {{ form.employee_id|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Employee Status</label>
+                {{ form.employee_status|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Date Employed:</label>
+                <div class="input-group date" id="reservationdate1" data-target-input="nearest">
+
+                  {{ form.date_employed|attr:"class:form-control datetimepicker, data-target=#reservationdate1"}}
+                  <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Date Resigned:</label>
+                <div class="input-group date" id="reservationdate2" data-target-input="nearest">
+
+                  {{ form.date_resigned|attr:"class:form-control datetimepicker, data-target=#reservationdate2"}}
+                  <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Last Name</label>
+                {{ form.last_name|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>First Name</label>
+                {{ form.first_name|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Middle Name</label>
+                {{ form.middle_name|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Nick Name</label>
+                {{ form.nickname|attr:"class:form-control"}}
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Birthplace</label>
+                {{ form.birth_place|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Date of birth:</label>
+                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+
+                  {{ form.date_of_birth|attr:"class:form-control datetimepicker, data-target=#reservationdate"}}
+                  <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <div class="form-group">
+                <label>Gender</label>
+                {{ form.gender|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Height (cm.)</label>
+                {{ form.height|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Weight (kg.)</label>
+                {{ form.weight|attr:"class:form-control"}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-12">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Work Info</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+              title="Collapse">
+              <i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="card-body" style="display: block;">
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>SSS</label>
+                {{ formwork.sss_no.errors }}
+                {{ formwork.sss_no|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>PHILHEALTH</label>
+                {{ formwork.philhealth_no|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>HDMF</label>
+                {{ formwork.pagibig_no|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>TIN</label>
+                {{ formwork.tin|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                {{ formwork.empl|attr:"class:hidden"}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Designation</label>
+                {{ formwork.designation|attr:"class:form-control"}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-12">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Address</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+              title="Collapse">
+              <i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="card-body" style="display: block;">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Permanent Address</label>
+                {{ formaddress.permanent_address.errors }}
+                {{ formaddress.permanent_address|attr:"class:form-control"|attr:"rows:2"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Town</label>
+                {{ formaddress.permanent_town.errors }}
+                {{ formaddress.permanent_town|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Province</label>
+                {{ formaddress.permanent_province.errors }}
+                {{ formaddress.permanent_province|attr:"class:form-control"}}
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Lodging Address</label>
+                {{ formaddress.lodging_address.errors }}
+                {{ formaddress.lodging_address|attr:"class:form-control"|attr:"rows:2"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Town</label>
+                {{ formaddress.lodging_town.errors }}
+                {{ formaddress.lodging_town|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Province</label>
+                {{ formaddress.lodging_province.errors }}
+                {{ formaddress.lodging_province|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                {{ formaddress.empl_address|attr:"class:hidden"}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-12">
+      <div class="card card-secondary">
+        <div class="card-header">
+          <h3 class="card-title">Payroll Info</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+              title="Collapse">
+              <i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="card-body" style="display: block;">
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Basic</label>
+                {{ formpayroll.basic.errors }}
+                {{ formpayroll.basic|attr:"class:form-control text-right"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Deminimis</label>
+                {{ formpayroll.deminimis.errors }}
+                {{ formpayroll.deminimis|attr:"class:form-control text-right"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Fringe</label>
+                {{ formpayroll.fringe.errors }}
+                {{ formpayroll.fringe|attr:"class:form-control text-right"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Performance Allowance</label>
+                {{ formpayroll.performance_allowance.errors }}
+                {{ formpayroll.performance_allowance|attr:"class:form-control text-right"}}
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Leave Credits</label>
+                {{ formpayroll.leave_credits.errors }}
+                {{ formpayroll.leave_credits|attr:"class:form-control text-right"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>SL Credits</label>
+                {{ formpayroll.sl_credits.errors }}
+                {{ formpayroll.sl_credits|attr:"class:form-control text-right"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>VL Credits</label>
+                {{ formpayroll.vl_credits.errors }}
+                {{ formpayroll.vl_credits|attr:"class:form-control"}}
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                {{ formpayroll.empl_payroll|attr:"class:hidden"}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Bank Account Number</label>
+                {{ formpayroll.account_number.errors }}
+                {{ formpayroll.account_number|attr:"class:form-control text-right"}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <div class="col-12">
+    <a href="javascript:history.go(-1)" class="btn btn-secondary">Cancel</a>
+    <input type="submit" value="Save Changes" class="btn btn-success ">
+  </div>
+</form>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block jsblock %}
+<!-- jQuery -->
+<script src="{% static 'mhiap_hr_ref/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'mhiap_hr_ref/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Select2 -->
+<script src="{% static 'mhiap_hr_ref/plugins/select2/js/select2.full.min.js' %}"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="{% static 'mhiap_hr_ref/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+<!-- InputMask -->
+<script src="{% static 'mhiap_hr_ref/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'mhiap_hr_ref/plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+<!-- date-range-picker -->
+<script src="{% static 'mhiap_hr_ref/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- bootstrap color picker -->
+<script src="{% static 'mhiap_hr_ref/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script
+  src="{% static 'mhiap_hr_ref/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Bootstrap Switch -->
+<script src="{% static 'mhiap_hr_ref/plugins/bootstrap-switch/js/bootstrap-switch.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'mhiap_hr_ref/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'mhiap_hr_ref/dist/js/demo.js' %}"></script>
+<!-- Page script -->
+<script>
+  $(function () {
+
+    //Date range picker
+    $('#reservationdate').datetimepicker({
+      format: 'YYYY-MM-DD'
+    });
+    $('#reservationdate1').datetimepicker({
+      format: 'YYYY-MM-DD'
+    });
+    $('#reservationdate2').datetimepicker({
+      format: 'YYYY-MM-DD'
+    });
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+
+
+  })
+</script>
+{% endblock %}

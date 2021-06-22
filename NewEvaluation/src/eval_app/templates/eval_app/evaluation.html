@@ -1,0 +1,99 @@
+{% extends 'eval_app/_base.html' %}
+{% load static %}
+
+
+
+{% block headblock %}
+
+{% endblock %}
+
+
+{% block body%}
+<br>
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{udetails.project}}</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Nickname</th>
+                            <th>Project</th>
+                            <th>Area</th>
+                            <th>User Status</th>
+                            <th>Lead Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for i in elist %}
+                        <tr>
+                            <td>{{i.employee_id}}</td>
+                            <td>{{i.last_name}}</td>
+                            <td>{{i.first_name}}</td>
+                            <td>{{i.nick_name}}</td>
+                            <td>{{i.project}}</td>
+                            <td>{{i.area}}</td>
+                            <td>{{i.user_status}}</td>
+                            <td>{{i.lead_status}}</td>
+                            <td><a href="{% url 'eval-EvaluationLead' i.employee_id %}">Evaluate</a></td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Nickname</th>
+                            <th>Project</th>
+                            <th>Area</th>
+                            <th>User Status</th>
+                            <th>Lead Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+{% endblock %}
+
+{% block jsblock %}
+<script src="{% static 'eval_app/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'eval_app/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'eval_app/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'eval_app/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
+{% endblock %}

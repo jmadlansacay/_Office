@@ -1,0 +1,14 @@
+{% if images %}
+	{% for image in images %}
+        <img src="{{ MEDIA_URL }}images\{{ image }}" alt="{{ image }}">
+        {{ MEDIA_URL }}images\{{ image }}
+        <img src="\media\images\{{ image }}" alt="{{ image }}">
+        <br>
+	{% endfor %}
+{% else %}
+	<p>No image available.</p>
+{% endif %}
+
+<a href="/media/PDF/timesheet.pdf">Click me!</a>
+
+

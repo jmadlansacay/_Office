@@ -1,0 +1,477 @@
+{% extends 'management_main/base.html' %}
+{% load static %}
+
+
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block body %}
+
+<style>
+    .highcharts-credits {
+display: none !important;
+}
+</style>
+
+<div class="modal-footer row justify-content-center bg-dark">
+    <h6>Click "X" button above to close</h6><span class="sr-only">(current)</span></a></button>
+   </div>
+<div class="row">
+    <div class=" col-6 card-body" >
+        <div id="headcountpie"></div><br>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#japanese" style="background-color: rgb(226, 212, 128);">
+                    <h6>Japanese</h6>
+                </button>
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#filipino" style="background-color: rgb(226, 212, 128);">
+                    <h6>Filipino</h6>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-6 card-body" style="height: 600px;">
+        <div id="employeepie"></div><br>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#directemployee" style="background-color: rgb(110, 114, 220);">
+                    <h6>Direct Employee</h6>
+                </button>
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#indirectemployee" style="background-color: rgb(110, 114, 220);">
+                    <h6>Indirect Employee</h6>
+                </button>
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#directoutsourced" style="background-color: rgb(110, 114, 220);">
+                    <h6>Direct Outsourced</h6>
+                </button>
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#indirecoutsourced" style="background-color: rgb(110, 114, 220);">
+                    <h6>Indirect Outsourced</h6>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODALS-->
+<div class="modal fade" id="japanese">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color: rgb(226, 212, 128);">
+                <h4 class="modal-title">Japanese</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Project</th>
+                                    <th>Project Type</th>
+                                    <th>Employee Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in jap %}
+                                <tr>
+                                    <td>{{i.last_name}}, {{i.first_name}} {{middle_name}} ({{i.nickname}})</td>
+                                    <td>{{i.project.name}}</td>
+                                    <td>{{i.get_project_type_display}}</td>
+                                    <td>{{i.get_employee_status_display}}</td>
+                                    <td>{{i.remarks}}</td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="filipino">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color: rgb(226, 212, 128);">
+                <h4 class="modal-title">Filipino</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Project</th>
+                                    <th>Project Type</th>
+                                    <th>Employee Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in fil %}
+                                <tr>
+                                    <td>{{i.last_name}}, {{i.first_name}} {{middle_name}} ({{i.nickname}})</td>
+                                    <td>{{i.project.name}}</td>
+                                    <td>{{i.get_project_type_display}}</td>
+                                    <td>{{i.get_employee_status_display}}</td>
+                                    <td>{{i.remarks}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="directemployee">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: rgb(110, 114, 220);">
+                <h4 class="modal-title">Direct Employees</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Project</th>
+                                    <th>Employee Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in direct_emp %}
+                                <tr>
+                                    <td>{{i.last_name}}, {{i.first_name}} {{middle_name}} ({{i.nickname}})</td>
+                                    <td>{{i.project.name}}</td>
+                                    <td>{{i.get_employee_status_display}}</td>
+                                    <td>{{i.remarks}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="indirectemployee">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color: rgb(110, 114, 220);">
+                <h4 class="modal-title">Indirect Employees</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Project</th>
+                                    <th>Employee Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in indirect_emp %}
+                                <tr>
+                                    <td>{{i.last_name}}, {{i.first_name}} {{middle_name}} ({{i.nickname}})</td>
+                                    <td>{{i.project.name}}</td>
+                                    <td>{{i.get_employee_status_display}}</td>
+                                    <td>{{i.remarks}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="directoutsourced">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color: rgb(110, 114, 220);">
+                <h4 class="modal-title">Direct Outsourced</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Project</th>
+                                    <th>Employee Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in outsourced %}
+                                <tr>
+                                    <td>{{i.last_name}}, {{i.first_name}} {{middle_name}} ({{i.nickname}})</td>
+                                    <td>{{i.project.name}}</td>
+                                    <td>{{i.get_employee_status_display}}</td>
+                                    <td>{{i.remarks}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="indirecoutsourced">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header " style="background-color: rgb(110, 114, 220);">
+                <h4 class="modal-title">Indirect Outsourced</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Project</th>
+                                    <th>Employee Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in indirect_outsourced %}
+                                <tr>
+                                    <td>{{i.last_name}}, {{i.first_name}} {{middle_name}} ({{i.nickname}})</td>
+                                    <td>{{i.project.name}}</td>
+                                    <td>{{i.get_employee_status_display}}</td>
+                                    <td>{{i.remarks}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example1').DataTable();
+    });
+    
+</script>
+
+<!--HEADCOUNT CHART-->
+<script>
+// Make monochrome colors
+var pieColors = (function () {
+    var colors = [],
+        base = Highcharts.getOptions().colors[6],
+        i;
+
+    for (i = 0; i < 10; i += 1) {
+        // Start out with a darkened base color (negative brighten), and end
+        // up with a much brighter color
+        colors.push(Highcharts.color(base).brighten((i - 6) / 8).get());
+    }
+    return colors;
+}());
+
+    Highcharts.chart('headcountpie', {
+    chart: {
+        backgroundColor: '#FFE5BA',
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        height: 500,
+        type: 'pie'
+    },
+    title: {
+        style: {
+            fontSize: '15px'
+        },
+        text: 'Head Count : {{empl_total}} Total'
+    },
+    tooltip: {
+        style: {
+            fontSize: '20px'
+        },
+        pointFormat: '{series.name}: {point.y} <b>{point.percentage:.1f}%</b>'
+        
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            size: 350,
+            colors: pieColors,
+            allowPointSelect: true,
+            cursor: 'pointer',
+
+            dataLabels: {
+                enabled: true,
+                style: {
+            	fontSize: '10px'
+            },
+                format: '<b>{point.name}</b>: {point.y}  <b>({point.percentage:.1f}%)</b>'
+            }
+        }
+    },
+
+    series: [{
+        name: 'Total',
+        colorByPoint: true,
+        data: [ {% for i in empl %}{
+            name: '{{i.project__name}}',
+            y: {{i.cnt}},
+            sliced: true,
+            selected: true,
+        },{% endfor %} ]
+    }]
+});
+</script>
+
+<!--EMPLOYEE CHART-->
+<script>
+  // Make monochrome colors
+var pieColors = (function () {
+    var colors = [],
+        base = Highcharts.getOptions().colors[4],
+        i;
+
+    for (i = 0; i < 10; i += 1) {
+        // Start out with a darkened base color (negative brighten), and end
+        // up with a much brighter color
+        colors.push(Highcharts.color(base).brighten((i - 3) / 6).get());
+    }
+    return colors;
+}());  
+    Highcharts.chart('employeepie', {
+    chart: {
+        backgroundColor: '#C9CFFF',
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        height: 500,
+        type: 'pie'
+    },
+    title: {
+        style: {
+            fontSize: '15px'
+        },
+        text: 'Employee Type  : {{empl_total}} Total'
+    },
+    tooltip: {
+        style: {
+            fontSize: '20px'
+        },
+        pointFormat: '{series.name}: {point.y} <b>{point.percentage:.1f}%</b>'
+        
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            size: 350,
+            colors: pieColors,
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                style: {
+            	fontSize: '10px'
+            },
+                format: '<b>{point.name}</b>: {point.y}  <b>({point.percentage:.1f}%)</b>'
+            }
+        }
+    },
+
+    series: [{
+        name: 'Total',
+        colorByPoint: true,
+        data: [{
+            name: 'Direct Emp.',
+            y: {{direct_count}},
+            sliced: true,
+            selected: true,
+        },
+        {
+            name: 'Indirect Emp.',
+            y: {{indirect_count}},
+            sliced: true,
+            selected: true,
+        },
+        {
+            name: 'Direct Outsourced',
+            y: {{outsourced_count}},
+            sliced: true,
+            selected: true,
+        },
+        {
+            name: 'Indirect Outsourced',
+            y: {{indirect_outsourced_count}},
+            sliced: true,
+            selected: true,
+        },
+     ]
+    }]
+});
+</script>
+{% endblock %}

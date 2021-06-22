@@ -1,0 +1,140 @@
+{% extends 'mhiap_hr/hr_base.html'%}
+{% load static %}
+
+
+
+{% block headblock %}
+<title>MHIAP | HR Master</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Font Awesome -->
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/plugins/fontawesome-free/css/all.min.css' %}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/css/ionicons.min.css' %}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/fixedHeader.dataTables.min.css' %}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'mhiap_hr_ref/dist/css/adminlte.min.css' %}">
+<!-- Google Font: Source Sans Pro -->
+
+<style>
+    thead input {
+        width: 100%;
+    }
+</style>
+
+{% endblock %}
+
+
+
+{% block bodyheaderblock %}
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">HR Master</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'hr_index' %}">Home</a></li>
+            <!-- <li class="breadcrumb-item active">Dashboard v1</li> -->
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+{% endblock %}
+
+
+
+{% block bodyblock %}
+<div class="card">
+    <div class="card-header">
+      <h3 class="card-title">List</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Employee Type</th>
+                    <th>Employee ID</th>
+                    <th>Employee Status</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in hrdb %}
+          <tr>
+            <td>{{i.employee_type}}</td>
+            <td>{{i.employee_id}}</td>
+            <td>{{i.employee_status}}</td>
+            <td>{{i.last_name}}, {{i.first_name}} ({{i.nickname}}) </td>
+            <td>{{i.gender}}</td>
+            <td>
+              <a class="btn btn-info btn-sm" href="{% url 'hr_master_edit' pk=i.id %}">
+                <i class="fas fa-pencil-alt">
+                </i>
+                Edit
+              </a>
+              <a class="btn btn-danger btn-sm" href="#">
+                <i class="fas fa-trash">
+                </i>
+                Delete
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Employee Type</th>
+                    <th>Employee ID</th>
+                    <th>Employee Status</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+
+{% endblock %}
+
+
+{% block jsblock %}
+<script src="{% static 'mhiap_hr_ref/js/jquery-3.5.1.js'%}"></script>
+<script src="{% static 'mhiap_hr_ref/js/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'mhiap_hr_ref/js/dataTables.fixedHeader.min.js'%}"></script>
+<script>
+    $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#example thead tr').clone(true).appendTo( '#example thead' );
+    $('#example thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+ 
+    var table = $('#example').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true
+    } );
+} );
+</script>
+
+{% endblock %}

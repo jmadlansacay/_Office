@@ -1,0 +1,58 @@
+{% extends 'computers_app/_base.html' %}
+{% load static %}
+
+
+
+
+
+{% block mainblock %}
+
+
+
+<div class="row">
+
+    <!-- Earnings (Monthly) Card Example -->
+    
+    {% for i in clist %}
+    <div class="col-xl-3 col-md-6 mb-1">
+        <div class="card border-left-primary shadow h-100 py-0">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <a href="{% url 'table' i.model %}">
+                            <div class="font-weight-bold text-primary text-uppercase mb-1">{{i.model}}</div>
+                        </a>                      
+                        <div class="text-xs font-weight-bold text-primary text-uppercase text-gray-800 mb-0">In Stock - {{i.instock}}
+                        </div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase text-success-800 mb-0">In Use - {{i.inuse}}
+                        </div>
+                        <div class="text-xs font-weight-bold text-danger text-uppercase text-danger-800 mb-0">Defective - {{i.def}}
+                        </div>
+                        <div class="text-m font-weight-bold text-primary text-uppercase text-gray-800 mb-0">Total - {{i.total}}</div>
+
+                    </div>
+                    <div class="col-auto">
+
+                        {% if i.type == 'Desktop' %}
+                            <i class="fas fa-desktop fa-2x text-gray-300"></i>
+                        {% elif i.type == 'Laptop' %}
+                            <i class="fas fa-laptop fa-2x text-gray-300"></i>
+                        {% else %}
+                            <i class="fas fa-tablet-alt fa-2x text-gray-300"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+</div>
+
+
+
+
+
+
+
+{% endblock %}

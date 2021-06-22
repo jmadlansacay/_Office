@@ -1,0 +1,372 @@
+{% extends 'ims_main/base.html' %}
+{% load static %}
+
+
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                All Areas
+            </div>
+            <div class="card-body">
+                <div id="all"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                Ammonia East
+            </div>
+            <div class="card-body">
+                <div id="AMMONIA_EAST"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                Ammonia West
+            </div>
+            <div class="card-body">
+                <div id="AMMONIA_WEST"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                Piperack
+            </div>
+            <div class="card-body">
+                <div id="PIPERACK"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                Urea
+            </div>
+            <div class="card-body">
+                <div id="UREA"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                Utility Offsite
+            </div>
+            <div class="card-body">
+                <div id="UTILITY_OFFSITE"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                Underground
+            </div>
+            <div class="card-body">
+                <div id="UNDERGROUND"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'ims_main/js/highcharts.src.js'%}"></script>
+
+<script>
+    // Radialize the colors
+Highcharts.setOptions({
+    colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+        return {
+            radialGradient: {
+                cx: 0.5,
+                cy: 0.3,
+                r: 0.7
+            },
+            stops: [
+                [0, color],
+                [1, Highcharts.color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    })
+});
+
+// Build the chart
+Highcharts.chart('all', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                connectorColor: 'silver'
+            }
+        }
+    },
+    series: [{
+        name: 'Share',
+        data: {{dataall|safe}}
+    }]
+});
+
+
+Highcharts.chart('AMMONIA_EAST', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                connectorColor: 'silver'
+            }
+        }
+    },
+    series: [{
+        name: 'Share',
+        data: {{AMMONIA_EAST|safe}}
+    }]
+});
+
+
+Highcharts.chart('AMMONIA_WEST', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                connectorColor: 'silver'
+            }
+        }
+    },
+    series: [{
+        name: 'Share',
+        data: {{AMMONIA_WEST|safe}}
+    }]
+});
+
+Highcharts.chart('PIPERACK', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                connectorColor: 'silver'
+            }
+        }
+    },
+    series: [{
+        name: 'Share',
+        data: {{PIPERACK|safe}}
+    }]
+});
+
+Highcharts.chart('UREA', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                connectorColor: 'silver'
+            }
+        }
+    },
+    series: [{
+        name: 'Share',
+        data: {{UREA|safe}}
+    }]
+});
+    
+Highcharts.chart('UTILITY_OFFSITE', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                connectorColor: 'silver'
+            }
+        }
+    },
+    series: [{
+        name: 'Share',
+        data: {{UTILITY_OFFSITE|safe}}
+    }]
+});
+
+
+Highcharts.chart('UNDERGROUND', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}',
+                connectorColor: 'silver'
+            }
+        }
+    },
+    series: [{
+        name: 'Share',
+        data: {{UNDERGROUND|safe}}
+    }]
+});
+
+
+
+
+</script>
+
+
+
+
+{% endblock %}

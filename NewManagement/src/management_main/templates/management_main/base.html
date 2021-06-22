@@ -1,0 +1,99 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'lte/dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    {% block head %}
+
+    {% endblock %}
+    <title >MHIAP Pte. Ltd.-Manila</title>
+    
+</head>
+
+<!-- <style>
+  .myContainer{
+  zoom: 0.7;
+  -moz-transform: scale(0.85);
+}
+</style> -->
+
+<body  >
+
+ 
+    <!--Nav Bar Start-->
+    <nav class="navbar navbar-expand-sm navbar-dark" style="height: 2rem; background-color:#155294;">
+        <!-- Brand -->
+        <a class="navbar-brand" href="/">MHIAP</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'main-index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target=".aboutus">About Us</a>
+            </li>
+            
+            
+          </ul>
+        
+
+    </nav>
+    <!--Nav Bar End-->
+    <div class="container-fluid" style="background-color: rgb(233, 217, 180);" >
+        <div class="row" style="margin-left: 5px;" >
+            <img src="{% static 'management_main/img/PhilJap.png' %}" class="img-thumbnail" width="50" height="30">
+                <h4 >MHIAP-Manila Branch Monthly Report</h4> 
+        </div>
+ 
+        {% block body %}
+
+
+        {% endblock %}
+
+
+
+    </div>
+
+    <!-- About Us Modal -->
+    <div class="modal fade aboutus" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content text-center">
+            <div class="modal-footer row justify-content-center bg-dark ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <h6>Close / "or press Esc"</h6>
+                </button>
+            </div>
+            <div><br>
+               content here
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="{% static 'lte/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'lte/dist/js/adminlte.js' %}"></script>
+    
+    <!-- DataTables -->
+    <script src="{% static 'lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+
+
+    
+    
+    {% block js %}
+
+    {% endblock %}
+    
+</body>
+
+</html>

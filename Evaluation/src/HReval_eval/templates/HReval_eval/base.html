@@ -1,0 +1,86 @@
+{% load static %}
+
+
+{% if user.is.authenticated %}
+
+
+
+{% else %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MHIAP</title>
+
+    <link rel="stylesheet" href="{% static 'back/css/bootstrap.min.css' %}">
+
+        <!-- Related styles of various icon packs and plugins -->
+        <link rel="stylesheet" href="{% static 'back/css/plugins.css' %}">
+
+        <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+        <link rel="stylesheet" href="{% static 'back/css/main.css' %}">
+
+        <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+        <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+        <link rel="stylesheet" href="{% static 'back/css/themes.css' %}">
+        <!-- END Stylesheets -->
+
+        <!-- Modernizr (browser feature detection library) -->
+        <script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+
+    
+
+    {% block head %}
+
+    {% endblock %}
+
+    <style>
+        body {
+            background-color: rgb(235, 241, 241);
+        }
+    </style>
+
+</head>
+
+<body>
+<br>
+<!--
+   <div class="container-fluid ">
+    <nav class="navbar navbar-light bg-primary container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <a class="btn btn-outline-success bg-warning animation-stretchLeft" href="/eval"><h5>Home</h5></a>
+        <div class="pull-right" id="navbarNav">
+            <a class="btn btn-outline-success bg-secondary animation-stretchRight" href="/logout"><h5> Logout</h5></a>
+        <div class="pull-right" id="navbarNav">
+            <li class="dropdown">
+                
+            </li>
+            
+    </nav>
+</div> 
+-->
+
+
+
+
+    {% block body %}
+
+    {% endblock %}
+
+
+    {% block js %}
+
+    {% endblock %}
+
+</body>
+
+
+</html>
+
+
+
+
+{% endif %}

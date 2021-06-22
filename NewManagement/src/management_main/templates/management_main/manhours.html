@@ -1,0 +1,370 @@
+{% load static %}
+
+
+{% load static %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'lte/dist/css/adminlte.min.css' %}">
+<link rel="stylesheet" href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
+<link rel="stylesheet" href="{% static 'lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+<link rel="stylesheet" href="{% static 'lte/plugins/fontawesome-free/css/all.min.css' %}">
+<link rel="stylesheet" href="{% static 'lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script> 
+<script src="http://code.highcharts.com/modules/data.js"></script>
+
+<title >MHIAP Pte. Ltd.-Manila</title>
+
+
+{% block body %}
+
+<style>
+    .modal {
+  padding: 0 !important; // override inline padding-right added from js
+}
+.modal .modal-dialog {
+    text-align: center;
+  width: 98%;
+  max-width: none;
+  margin: 10;
+}
+.modal .modal-content {
+    text-align: center;
+  height: 90%;
+  border: 0;
+  border-radius: 0;
+}
+.modal .modal-body {
+  overflow-y: auto;
+}
+</style>
+
+
+
+<div class="modal-footer row justify-content-center bg-dark">
+   <h6>Click "X" button above to close</h6><span class="sr-only">(current)</span></a></button>
+  </div>
+<div class="row">
+    <div class="col">
+            <div class="card" >
+                <div class=" bg-secondary">
+                    <div class="float-right">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn bg-secondary btn-sm dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                               <h6>View Previous Year</h6>
+                            </button>
+                            <div class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item bg-secondary" href="#" data-toggle="modal" data-target=".project2020"><h5>2020</h5></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background-color: cornsilk;">
+                    <div id="projecthours2021"></div>
+                </div>
+              
+
+                </div>
+            </div>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="table-responsive p-0" style="height: 10px;">
+        <table id="2021" class="table table-head-fixed text-nowrap text-nowrap"
+            style="background-color:#6f98ce;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Jan21</th>
+                    <th>Feb21</th>
+                    <th>Mar21</th>
+                    <th>Apr21</th>
+                    <th>May21</th>
+                    <th>Jun21</th>
+                    <th>Jul21</th>
+                    <th>Aug21</th>
+                    <th>Sep21</th>
+                    <th>Oct21</th>
+                    <th>Nov21</th>
+                    <th>Dec21</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in projecthours2021 %}
+                <tr>
+                    <th>{{i.project.name}}</th>
+                    <td>{{i.jan_hrs}}</td>
+                    <td>{{i.feb_hrs}}</td>
+                    <td>{{i.mar_hrs}}</td>
+                    <td>{{i.apr_hrs}}</td>
+                    <td>{{i.may_hrs}}</td>
+                    <td>{{i.jun_hrs}}</td>
+                    <td>{{i.jul_hrs}}</td>
+                    <td>{{i.aug_hrs}}</td>
+                    <td>{{i.sep_hrs}}</td>
+                    <td>{{i.oct_hrs}}</td>
+                    <td>{{i.nov_hrs}}</td>
+                    <td>{{i.dec_hrs}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+<!--MODALS-->
+<div class="modal fade project2020" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content text-center">
+            <div style="height: 4rem; " class="modal-footer row justify-content-center bg-dark ">
+                <button style="height: 2rem; " type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <h6>Click here to close </h6>
+                </button>
+            </div>
+            <div  style="background-color: cornsilk;">
+                <div id="projecthours2020"></div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="table-responsive p-0" style="height: 10px;">
+                <table id="2020" class="table table-head-fixed text-nowrap text-nowrap"
+                    style="background-color:#6f98ce;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Jan20</th>
+                            <th>Feb20</th>
+                            <th>Mar20</th>
+                            <th>Apr20</th>
+                            <th>May20</th>
+                            <th>Jun20</th>
+                            <th>Jul20</th>
+                            <th>Aug20</th>
+                            <th>Sep20</th>
+                            <th>Oct20</th>
+                            <th>Nov20</th>
+                            <th>Dec20</th>
+                        </tr>
+                    </thead>
+        
+                    <tbody>
+                        {% for i in projecthours %}
+                        <tr>
+                            <th>{{i.project.name}}</th>
+                            <td>{{i.jan_hrs}}</td>
+                            <td>{{i.feb_hrs}}</td>
+                            <td>{{i.mar_hrs}}</td>
+                            <td>{{i.apr_hrs}}</td>
+                            <td>{{i.may_hrs}}</td>
+                            <td>{{i.jun_hrs}}</td>
+                            <td>{{i.jul_hrs}}</td>
+                            <td>{{i.aug_hrs}}</td>
+                            <td>{{i.sep_hrs}}</td>
+                            <td>{{i.oct_hrs}}</td>
+                            <td>{{i.nov_hrs}}</td>
+                            <td>{{i.dec_hrs}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'management_main/js/highcharts.src.js'%}"></script>
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Bootstrap -->
+<script src="{% static 'lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'lte/dist/js/adminlte.js' %}"></script>
+
+<!-- DataTables -->
+<script src="{% static 'lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+
+
+
+<script language="JavaScript">
+    
+    $(document).ready(function () {
+        var data = {
+            table: '2020'
+        };
+        var chart = {
+            backgroundColor: '#CFFFF4',
+            type: 'column',
+            height: 575,
+        };
+        var title = {
+            text: '<span style="font-size: 15px">2020 Billable Project Hours</span>'
+        };
+        var yAxis = {
+            stackLabels: {
+                enabled: true,
+                formatter: function() {
+                    return Highcharts.numberFormat(this.total, 2, ) ;
+                }
+            },
+            reversedStacks: false,
+            allowDecimals: false,
+            title: {
+                style: {
+                    fontSize: '5px'
+                },
+                text: 'No. of hours'
+            }
+        };
+        var xAxis = {
+            labels: {
+                style: {
+                    fontSize: '8px'
+                }
+            }
+        }
+        var tooltip = {
+            style: {
+                fontSize: '15px'
+            },
+            formatter: function () {
+                return '<b>' + this.point.name.toUpperCase() + '</b><br/>' +
+                this.series.name + '</b><br/>'   + this.point.y + 'hrs' ;
+            }
+        };
+        var credits = {
+            enabled: false
+        };
+
+        var plotOptions = {
+            series: {
+                pointWidth: 10,
+                stacking: 'normal'
+            }
+        };
+        var legend = {
+            reversed: false,
+            itemStyle: {
+                fontSize: '15px'
+            }
+        };
+        var json = {};
+        json.chart = chart;
+        json.title = title;
+        json.data = data;
+        json.yAxis = yAxis;
+        json.xAxis = xAxis;
+        json.credits = credits;
+        json.tooltip = tooltip;
+        json.plotOptions = plotOptions;
+        json.legend = legend;
+        $('#projecthours2020').highcharts(json);
+    });
+
+</script>
+
+<script language="JavaScript">
+    
+    $(document).ready(function () {
+        var data = {
+            table: '2021'
+        };
+        var chart = {
+            backgroundColor: '#E3F5C0',
+            type: 'column',
+            height: 550,
+        };
+        var title = {
+            text: '<span style="font-size: 15px">2021 Billable Project Hours</span>'
+        };
+        var yAxis = {
+            stackLabels: {
+                enabled: true,
+                formatter: function() {
+                    return Highcharts.numberFormat(this.total, 2, ) ;
+                }
+            },
+            reversedStacks: false,
+            allowDecimals: false,
+            title: {
+                style: {
+                    fontSize: '10px'
+                },
+                text: 'No. of hours'
+            }
+        };
+        var xAxis = {
+            labels: {
+                style: {
+                    fontSize: '10px'
+                }
+            }
+        }
+        var tooltip = {
+            style: {
+                fontSize: '20px'
+            },
+            formatter: function () {
+                return '<b>' + this.point.name.toUpperCase() + '</b><br/>' +
+                this.series.name + '</b><br/>'   + this.point.y + 'hrs' ;
+            }
+        };
+        var credits = {
+            enabled: false
+        };
+
+        var plotOptions = {
+            
+            series: {
+                
+                pointWidth: 20,
+                stacking: 'normal'
+            }
+        };
+        var legend = {
+            reversed: false,
+            itemStyle: {
+                fontSize: '15px'
+            }
+        };
+        var json = {};
+        json.chart = chart;
+        json.title = title;
+        json.data = data;
+        json.yAxis = yAxis;
+        json.xAxis = xAxis;
+        json.credits = credits;
+        json.tooltip = tooltip;
+        json.plotOptions = plotOptions;
+        json.legend = legend;
+        $('#projecthours2021').highcharts(json);
+    });
+
+</script>
+
+{% endblock %}

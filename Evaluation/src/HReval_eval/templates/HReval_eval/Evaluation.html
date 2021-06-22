@@ -1,0 +1,316 @@
+{% extends 'HReval_eval/base.html'%}
+{% load static%}
+
+{% block head %}
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+
+<!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+
+<!-- Stylesheets -->
+<!-- Bootstrap is included in its original form, unaltered -->
+<link rel="stylesheet" href="{% static 'back/css/bootstrap.min.css' %}">
+
+<!-- Related styles of various icon packs and plugins -->
+<link rel="stylesheet" href="{% static 'back/css/plugins.css' %}">
+
+<!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+<link rel="stylesheet" href="{% static 'back/css/main.css' %}">
+
+<!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+<!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+<link rel="stylesheet" href="{% static 'back/css/themes.css' %}">
+
+<script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+
+
+<!-- END Stylesheets -->
+
+<!-- Modernizr (browser feature detection library) -->
+<script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+
+<img src="{% static 'back/img/placeholders/backgrounds/login_full_bg.jpg' %}" alt="Login Full Background"
+    class="full-bg animation-pulseSlow">
+
+<style>
+    input[type=radio] {
+        display: block;
+        margin: 0 auto;
+
+    }
+
+    ul li {
+        display: inline-block;
+    }
+</style>
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+
+
+
+<!-- Page content -->
+<div id="page-content">
+
+    <form method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered">
+        <div class="container-fluid id=" id="wrapper">
+            <br>
+            <div class="row container-fluid justify-content-center">
+                <div class="col">
+                    <!-- Advanced Active Theme Color Widget -->
+                    <div class="widget">
+                        <div class="widget-advanced">
+                            <!-- Widget Header -->
+                            <!--
+                                            
+                                        -->
+                            <div class="widget-header text-center themed-background-dark">
+                                <h3 class="widget-content-light animation-fadeIn">
+                                    <a href="" class="themed-color">{{hrmaster.last_name}},
+                                        {{hrmaster.first_name}} {{hrmaster.middle_name}}.</a>
+                                    
+                                </h3>
+                                <h5>
+                                    <a href="{% url 'mylogout' %}" class="themed-color">Logout -</a>
+                                    <a href="{% url 'change_password' %}" class="themed-color">Change password </a>
+                                </h5>
+                            </div>
+
+                            <!-- END Widget Header -->
+
+                            <!-- Widget Main -->
+
+                            <div class="widget-main">
+                                <a href="" class="widget-image-container animation-hatch">
+                                    <img src="{% static 'img/' %}{{hrmaster.pic}}" alt="avatar"
+                                        class="widget-image img-circle">
+                                </a>
+                                <div class="row text-center animation-fadeIn">
+                                    <div class="col-xs-4">
+                                        <h4><strong>{{hrmaster.employee_type}}</strong><br><small>Employee
+                                                Type</small></h4>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h4><strong>{{hrmaster.employee_status}}</strong><br><small>Employee
+                                                Status</small></h4>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h3><strong>{{hrmaster.date_employed}}</strong><br><small>Date
+                                                Employed</small></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
+                   
+                    <div class="row">
+                        <div class="col-2">
+                            <label>Initial Status</label>
+                            {{form.user_submit|attr:"class:form-control"}}
+                            
+                        </div>
+                        <div class="col-2">
+                           
+                            <label>Lead Status</label>
+                            {{form.lead_submit|attr:"class:form-control"}}
+                        </div>
+                        <div class="text-dark col-8">Rating Criteria
+                            <br>
+                            <br>
+                            <div class="row">         
+                            <div class="col-1">
+                                <label>1 - Poor</label>
+                            </div>
+                            <div class="col-1">
+                                <label>2 - Fair</label>
+                            </div>
+                            <div class="col-1">
+                                <label>3 - Good</label>
+                            </div>
+                            <div class="col-1">
+                                <label>4 - Very Good</label>
+                            </div>
+                            <div class="col-1">
+                                <label>5 - Excellent</label>
+                            </div>
+                            </div>
+                            </div>
+                    </div>
+                    <br>
+
+                    <div class="row container-fluid card-deck justify-content-center">
+                        <!--Basic Salary-->
+
+                        {% if perm == '5' %}
+                        <div class="card-deck col-4">
+                            <div class="card bg-light ">
+                                <div class="card-header"><strong>
+                                        1. Basic Salary</strong>
+                                </div>
+                                <div class="card-body">
+                                    <label class="control-label" for="example-text-input">Basic:
+                                        {{HrMasterPayrollDetail.basic}} </label>
+                                    <br>
+                                    <br>
+                                    <label class="control-label" for="example-email-input">Fringe :
+                                        {{HrMasterPayrollDetail.fringe}} </label>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {{ form.empl_eval|attr:"hidden" }}
+                        <!--Work Attitude-->
+                        <div class="card-deck  col-4">
+                            <div class="row card bg-light">
+                                <div class="card-header"><strong>
+                                        2. Work Attitude</strong>
+                                </div>
+                                <div class="row col-sm-12 card-body">
+                                    <div class="text-center col-md-6">Time Panctuality<div>...</div> 
+                                        {{ form.time_panctuality}}
+                                    </div>
+
+                                    <div class="text-center col-md-6">Cooperativenes<div>...</div>
+                                        {{ form.cooperativeness}}
+                                    </div>
+
+                                    <div class="text-center col-md-6">Cost Saving Mind<div>...</div>
+                                        {{ form.costsaving}}
+                                    </div>
+                                    <div class="text-center col-md-6">Harmony<div>...</div>
+                                        {{ form.harmony}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Productivity-->
+                        <div class="card-deck col-4">
+                            <div class="card bg-light">
+                                <div class="card-header"><strong>
+                                        3. Productivity</strong>
+                                </div>
+                                <div class="row col-sm-12 card-body">
+                                    <div class="text-center col-md-6">Speed<div>...</div>
+                                        {{ form.speed}}
+                                    </div>
+                                    <div class="text-center col-md-6">Accuracy & Quality<div>...</div>
+                                        {{ form.accqlty}}
+                                    </div>
+                                    <div class="text-center col-md-6">Work Efficiency<div>...</div>
+                                        {{ form.workeff}}
+                                    </div>
+                                    <div class="text-center col-md-6">PDCA Cycle<div>...</div>
+                                        {{ form.pdacycle}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+
+
+                    <div class="row container-fluid card-deck justify-content-center">
+                        <!--Contribution to MHIAP-->
+                        <div class="card-deck col-12">
+                            <div class="card bg-light ">
+                                <div class="card-header"><strong>
+                                        4. Contributions to MHIAP</strong>
+                                </div>
+                                <div class="row col-sm-12 card-body ">
+                                    <div class="text-center col-sm-6">Loyalty etc.<div>...</div>
+                                        {{ form.loyalty}}
+                                      
+                                    </div>
+                                    <div class="text-center col-sm-6">Team Player<div>...</div>
+                                        {{ form.team_player}}
+                                    </div>
+                                </div>
+                                <div class="row col-sm-12 card-body ">
+                                    <div class="col-md-12">Contributions to MHIAP
+                                        {{ form.contribution|attr:"class:form-control"}}
+                                    </div>
+                                <div class="card-body col-sm-12 ">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!--Personal Target Achievement-->
+                        <div class="card-deck col-6">
+                            <div class="card bg-light ">
+                                <div class="card-header"><strong>
+                                        5. Personal Target Achievements ( June - November 2020 )</strong>
+                                </div>
+                                <div class="card-body ">
+                                    <div class="col-sm-12">
+                                        {{ form.achievement.errors }}
+                                        {{ form.achievement|attr:"class:form-control"|attr:"rows:16"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <!--Buttons-->
+                    <div class="row container-fluid form-group form-actions justify-content-center bg-info">
+                        <div>
+
+                            <button type="submit" class="btn btn-md btn-primary">
+                                Submit</button>
+                        </div>
+                    </div>
+    </form>
+
+</div>
+<!-- END Page Content -->
+
+
+
+
+
+
+
+
+<!-- END Basic Form Elements Content -->
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+<script src="{% static 'back/js/vendor/jquery.min.js' %}"></script>
+<script src="{% static 'back/js/vendor/bootstrap.min.js' %}"></script>
+<script src="{% static 'back/js/plugins.js' %}"></script>
+<script src="{% static 'back/js/app.js' %}"></script>
+<script src="{% static 'back/js/pages/formsGeneral.js' %}"></script>
+<script>$(function () { FormsGeneral.init(); });</script>
+
+
+
+
+
+<script src="{% static 'back/js/pages/index.js' %}"></script>
+<script>$(function(){ Index.init(); });</script>
+
+
+
+
+
+{% endblock %}

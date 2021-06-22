@@ -1,0 +1,838 @@
+{% extends 'management_main/base.html' %}
+{% load static %}
+{% load humanize %}
+
+
+{% block body %}
+
+
+<!--MODAL FULL SCREEN-->
+<style>
+    .modal {
+  padding: 0 !important; // override inline padding-right added from js
+}
+.modal .modal-dialog {
+    text-align: center;
+  width: 65%;
+  max-width: none;
+  margin: 10;
+}
+.modal .modal-content {
+    text-align: center;
+  height: 70%;
+  border: 0;
+  border-radius: 0;
+}
+.modal .modal-body {
+  overflow-y: auto;
+}
+</style>
+
+<!--FINANCIAL STATUS  CARD SCROLLABLE-->
+<style>
+    .scroll {
+      overflow: scroll;
+    }
+   </style>
+
+<style>
+   .zoom {
+      transition: transform .2s;
+      margin: 0 auto;
+      z-index: 10;
+      position: relative;
+      float:left;
+    }
+    
+    .zoom:hover {
+      -ms-transform: scale(1.5); /* IE 9 */
+      -webkit-transform: scale(1.5); /* Safari 3-8 */
+      transform: scale(3);
+      z-index: 15;
+      position: relative;
+      float: left;
+      top: 5px;
+      right: 10px;
+      
+      
+    }
+    </style>
+
+
+<!--IMAGE WIDTH-->
+<style>
+    img {
+        max-width: 100%;
+    }
+</style>
+
+
+<style>
+    a {
+ color:rgb(35, 46, 199);
+}
+a:hover {
+    color: rgb(139, 112, 202);
+}
+</style>
+
+
+
+<div class="wrapper" >
+    <div class="row" >
+
+        
+        <div class="col-4 ">
+            <!--HEADCOUNT-->
+            <div class="card ">
+                <div style="background-color: darkgray;">
+                    <h6 style="margin-left: 7px;"><b>HeadCount</b><a style="float: right;" href="#" data-toggle="modal" data-target=".bd-example-modal-lg">View Source</a> </h6>
+                    
+                </div>
+                <div  style="height: 18rem; background-color: cornsilk;">
+                    <a href="{% url 'main-employees' 'ALL' %}" target="_blank">
+                        <h6>Total HeadCount : <b>{{empl_total}}</b> (Japanese & Filipino) (view details)</h6>
+                    </a>
+                    <div class="col-12 bg-warning">
+                        <div class="row">
+                            <div class="col-3" >
+                                <span class="row" style="margin-left: 1px;">Japanese</span>
+                                <span class="row" style="margin-left: 1px;">{{jap}}</span>
+                            </div>
+                            <div class="col-2" style="background-color: rgb(209, 142, 91);">
+                                <span class="row" style="margin-left: 1px;">Regular</span>
+                                <span class="row" style="margin-left: 1px;">{{regular_jap}}</span>
+                            </div>
+                            <div class="col-2" style="background-color: rgb(136, 208, 85);">
+                                <span class="row" style="margin-left: 1px;">Project Based</span>
+                                <span class="row" style="margin-left: 1px;">{{project_jap}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 bg-danger" style="margin-top:5px;">
+                        <div class="row">
+                            <div class="col-3">
+                                <span class="row" style="margin-left: 1px;">Filipino</span>
+                                <span class="row" style="margin-left: 1px;">{{fil}}</span>
+                            </div>
+                            <div class="col-2" style="background-color: rgb(209, 142, 91);">
+                                <span class="row" style="margin-left: 1px;">Regular</span>
+                                <span class="row" style="margin-left: 1px;">{{regular}}</span>
+                            </div>
+                            <div class="col-2" style="background-color: rgb(136, 208, 85);">
+                                <span class="row" style="margin-left: 1px;">Project Based</span>
+                                <span class="row" style="margin-left: 1px;">{{project}}</span>
+                            </div>
+                            <div class="col-2" style="background-color: rgb(44, 41, 38);">
+                                <span class="row" style="margin-left: 1px;">Fixed Term</span>
+                                <span class="row" style="margin-left: 1px;">{{fixed}}</span>
+                            </div>
+                            <div class="col-3" style="background-color: #83b3e6;">
+                                <span class="row" style="margin-left: 1px;">Outsourced</span>
+                                <span class="row" style="margin-left: 1px;">MTS:{{indirect_outsourced_count}} CBT:{{outsourced_count}}</span>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div id="headcount" style="margin-top:5px;"></div>
+            
+                </div>
+                <!-- HeadCount Modal -->
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content text-center">
+                            <div class="modal-footer row justify-content-center bg-dark ">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    <h6>Close / "or press Esc"</h6>
+                                </button>
+                            </div>
+                            {% for i in headcount %}
+                            <div><br>
+                                <!-- <img src="{% static 'management_main/img/headcount.jpg' %}" height="100%" width="2100"> -->
+                                <img src="{{i.source_file.url}}" height="100%" width="2100">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!--Financial Status-->
+            <div class="card">
+                <div style="background-color: darkgray;"><h6 style="margin-left: 7px;"><b>Financial Status</b> </h6>
+                </div>
+                <div style="height: 7rem; background-color: cornsilk;">
+                    <div>
+                        <img data-toggle="modal" data-target=".bd-example-modal-xl"
+                            src="{% static 'management_main/img/financial.jpg' %}" height="110" width="900">
+                    </div>
+                </div>
+            </div>
+            <!-- Financial Modal -->
+            <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-footer row justify-content-center bg-dark">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                <h4>Close / "or press Esc"</h4>
+                            </button>
+                        </div>
+                        <div>
+                            <img src="{% static 'management_main/img/financial.jpg' %}" height="100%" width="100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Company Event and Photos-->
+            <div class="card">
+                <div style="background-color: darkgray;">
+                    <h6 style="margin-left: 7px;"><b>Company News, Events and Photos</b> </h6>
+                </div>
+        
+                <div class=" scroll" style="height: 8rem; background-color: cornsilk;">
+
+                    <div class="col">
+                        {% for i in events %}
+                        <div class="card" style="margin-top:5px;">
+                            <div  style="height: 1rem; background-color: rgb(220, 180, 184);">
+                            </div>
+                            <div  style="height: 6rem; background-color:  rgb(238, 211, 216);">
+                                <div class="row container-fluid" >
+                                    <div class="col-2">
+                                        <img src="{{i.pic.url}}" height="80" width="180">
+                                    </div>
+                                    <div class="col-10">
+                                        <div>
+                                            <span>
+                                                {{i.date}}
+                                            </span>
+                                            <div>
+                                                <div>
+                                                    <a href="{% url 'news_events_photos' id=i.id %}" target="_blank">
+                                                        <h6>{{i.title}}</h>
+                                                    </a>
+                                                </div>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                   
+                </div>
+            </div>
+        </div>
+
+        <!--MANHOURs PROJECT AND EMPLOPYEE-->
+        <div class="col-4">
+        
+            <!--CHART Billable Project Hours-->
+            <div class="card" style="height: 11rem; background-color: darkgray;">
+                <h6 style="margin-left: 7px;"><b>Billable Project Hours</b><a style="float: right;" href="{% url 'manhours' %}" target="_blank">Full Year View</a> </h6>
+                
+                <div  style=" background-color: cornsilk;">
+                    <div id="projecthour"></div>
+                </div>
+            </div>
+        
+            <!--Employee Man Hours (Direct  Billable & Non-Billable)-->
+            <div class="card" style="height: 17rem; background-color: darkgray;">
+                <h6 style="margin-left: 7px;"><b>Employee Man Hours</b><a style="float: right;" href="{% url 'employeemanhours' %}" target="_blank">Full Year View</a> </h6>
+
+                <div style="height: 23rem; background-color: cornsilk;">
+                    <div id="empmanhour2"></div>
+                </div>
+            </div>
+        
+            <!--Project Information-->
+            <div class="card " style="height: 9rem; background-color: darkgray;">
+                <h6 style="margin-left: 7px;"><b>PROJECT Information</b> </h6>
+        
+                <div style="background-color: rgb(255, 247, 185);">
+                    <div class="row" style="margin-top:5px;">
+                        <!-- GPUFP -->
+                        <div class="col-4">
+                            <div class="card" style="height: 7rem; ">
+                                <div style=" background-color: rgb(201, 228, 157);">
+                                    <h6 style="margin-left: 7px;">GPUFP</h6>
+                                </div>
+                                <div  style="background-color: rgb(145, 150, 151);">
+                                    <div>
+                                        <img data-toggle="modal" data-target=".gpufp"
+                                            src="{% static 'management_main/img/gpufp.jpg' %}" width="100%" height="60">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- GPUFP Modal -->
+                            <div class="modal fade gpufp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div style="height: 4rem; " class="modal-footer row justify-content-center bg-dark">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                <h6>Close / "or press Esc"</h6>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <img src="{% static 'management_main/img/gpufp.jpg' %}" height="100%" width="100%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- CO2 -->
+                        <div class="col-4">
+                            <div class="card" style="height: 7rem; ">
+                                <div style="background-color: rgb(140, 210, 223);">
+                                    <h6 style="margin-left: 7px;">CO2</h6>
+                                </div>
+                                <div style="background-color: rgb(145, 150, 151);">
+                                    <div>
+                                        <img data-toggle="modal" data-target=".c02"
+                                            src="{% static 'management_main/img/c02.jpg' %}" width="300" height="60">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- CO2 Modal -->
+                            <div class="modal fade c02" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div style="height: 4rem; " class="modal-footer row justify-content-center bg-dark">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                <h6>Close / "or press Esc"</h6>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <img src="{% static 'management_main/img/c02.jpg' %}" width="3200">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- BIM  -->
+                        <div class="col-4">
+                            <div class="card" style="height: 7rem; ">
+                                <div style="background-color: rgb(187, 245, 199);">
+                                    <h6 style="margin-left: 7px;">BIM</h6>
+                                </div>
+                                <div style="background-color: rgb(145, 150, 151);">
+                                    <div>
+                                        <img data-toggle="modal" data-target=".bim"
+                                            src="{% static 'management_main/img/bim.jpg' %}" width="300" height="60">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- BIM Modal -->
+                            <div class="modal fade bim" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div style="height: 4rem; " class="modal-footer row justify-content-center bg-dark">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                <h6>Close / "or press Esc"</h6>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <img src="{% static 'management_main/img/bim.jpg' %}" height="1000" width="3200">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        
+        </div>
+
+
+        <!--MESSAGES FROM THE MANAGER / COVID TRACKER / WEATHER-->
+        <div class="col-4">
+            <!--Messages from the Managers-->
+            <div class="card " style="height: 12rem;">
+                <div style="background-color: darkgray;">
+                    <h6 style="margin-left: 7px;"><b>Messages from the Managers</b> </h6>
+                </div>
+                <div class=" scroll" style="background-color: rgb(255, 247, 185);">
+        
+                    <div class="col">
+                        {% for i in messages %}
+                        <div class="card" style="margin-top:8px;">
+                            <div  style="height: 1rem; background-color: rgb(228, 202, 167);">
+        
+                            </div>
+                            <div  style=" height: 6rem; background-color: rgb(238, 223, 203);">
+                                <div  class="row container-fluid">
+                                    <div class="col-2">
+                                        <img data-toggle="modal" data-target=".managers" src="{{i.pic1.url}}" height="80%"
+                                            width="100%">
+                                    </div>
+                                    <div class="col-10">
+                                        <div>
+                                            <span>
+                                                <h6>{{i.date}}</h6>
+                                            </span>
+                                            <div>
+                                                <div>
+                                                    <a href="{% url 'messages_managers' id=i.id %}" target="_blank">
+                                                        <h6>{{i.title}}</h6>
+                                                    </a>
+                                                </div>
+                                            </div><br>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        
+            <!--Covid Tracker-->
+            <div class="card ">
+                <div style="background-color: darkgray;">
+                    <h6 style="margin-left: 7px;"><b> DOH Covid-19 Tracker</b></h6>
+                </div>
+                <div style="background-color: rgb(255, 247, 185);">
+                    <div>
+                        <h6> <a class="float-right"
+                                href="https://public.tableau.com/shared/BG2G88B76?:display_count=y&:origin=viz_share_link&:embed=y"
+                                target="_blank">
+                                DOH Covid-19 Tracker Overview </a></h6>
+                    </div>
+                    <div>
+                        <h6><b>Cases for NCR</b> as of {% now "M d,Y" %}</h6>
+                    </div>
+                    <div class="row">
+                        {% for i in covid_cases_beds %}
+                        <div class="col-4">
+                            <!-- <img data-toggle="modal" data-target=".dailycases" src="{% static 'management_main/img/dailycases.jpg' %}"
+                                width="350" height="115" class="zoom"> -->
+                            <img data-toggle="modal" data-target=".dailycases" src="{{i.daily_cases.url}}"
+                                width="350" height="115" class="zoom">
+                        </div>
+        
+        
+                        <div class="col-4">
+                            <!-- <img data-toggle="modal" data-target=".beds" src="{% static 'management_main/img/beds.jpg' %}" width="350"
+                                height="115" class="zoom"> -->
+                            <img data-toggle="modal" data-target=".beds" src="{{i.bed_capacity.url}}" width="350"
+                                height="115" class="zoom">
+                        </div>
+                        {% endfor %}
+        
+                        <div class="col-4">
+                            <h6>View Latest & Previous</h6>
+                            <div>
+                                {% for i in cov_latest %}
+                                <a style="background-color:#2bc2d3;" href="{% url 'covidoverview' id=i.id %}" target="blank">
+                                    <h6><i style="color:#7b3edc;"></i>{{i.date}}</h6>
+                                </a>
+                                {% endfor %}
+                            </div>
+        
+                            <div>
+                                {% for i in cov %}
+                                <a style="background-color:#2bc2d3;" href="{% url 'covidoverview' id=i.id %}" target="blank">
+                                    <h6>{{i.date}}</h6>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        
+            <!--WEATHER-->
+
+            <div class="card" style="height :14rem;">
+                <div style="background-color: darkgray;">
+                    <h6 style="margin-left: 7px;"><b>Weather Information</b> </h6>
+                </div>
+                <div style=" background-color: cornsilk;">
+                        <a class="weatherwidget-io" href="https://forecast7.com/en/14d58121d09/pasig/" data-label_1="PASIG" data-label_2="WEATHER" data-icons="Climacons Animated" data-theme="orange" data-basecolor="#f5edaa" >PASIG WEATHER</a>
+                </div>
+            </div>
+            <!-- Weather Modal -->
+            <div class="modal fade weather" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content text-center">
+                    <div class="modal-footer row justify-content-center bg-dark ">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <h4>Close / "or press Esc"</h4>
+                        </button>
+                    </div>
+                    <div><br><br><br>
+                        <a href="https://forecast7.com/en/14d58121d09/pasig/"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'management_main/js/highcharts.src.js'%}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+
+
+
+
+<!--headcount table-->
+<script>
+    $(function () {
+
+        $('#example1').DataTable({
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+        });
+    });
+
+</script>
+
+<!--HEADCOUNT CHART-->
+<script>
+    Highcharts.chart('headcount', {
+    chart: {
+        backgroundColor: '#FCFFC5',
+        height: 100,
+        type: 'bar'
+        
+    },
+    title: {
+        text: ''
+    },
+    xAxis: {
+        categories: ['']
+    },
+    yAxis: {
+        max: '{{empl_total}}',
+        min: 0,
+        labels: {
+            enabled: false
+        },
+        title: {
+            text: ''
+        }
+    },
+    legend: {
+        reversed: true,
+        itemStyle: {
+            fontSize: '10px'
+        }
+    },
+    plotOptions: {
+        series: {
+            pointWidth: 35,
+            stacking: 'normal'
+        },
+        bar: {
+            dataLabels: {
+                enabled: true,
+                format: '{point.y}',
+            }
+        }
+    },
+    tooltip: {
+        style: {
+            fontSize: '15px'
+        },
+        pointFormat: '{series.name}: {point.y} <b>{point.percentage:.1f}%</b>',
+    },
+    series: [{
+        name: 'Outsourced',
+        data: [{{outsrcd}},]
+    },{
+        name: 'Fixed Term',
+        data: [ {{fixed}}, ]
+    },{
+        name: 'Project Based',
+        data: [ {{all_project}},]
+    },{
+        name: 'Regular',
+        data: [{{all_regular}},]
+    } ]
+});
+</script>
+
+<!--Covid table-->
+<script>
+    $(function () {
+
+        $('#example2').DataTable({
+            "lengthChange": false,
+            "ordering": true,
+            "info": false,
+            "searching": false,
+            "autoWidth": true,
+            "pageLength" : 3,
+            
+
+            "order": [[ 1, "desc" ]],
+        });
+    });
+</script>
+
+
+<!--project man hour yearly view-->
+<script>
+    Highcharts.chart('projecthour', {
+        plotOptions: {
+            series: {
+                showCheckbox: true
+            }
+        },
+        chart: {
+            backgroundColor: '#FCFFC5',
+            height: 160,
+            type: 'column'
+        },
+        title: {
+            text: '<span style="font-size: 10px">2020 - 2021 Billable Project Hours</span>'
+        },
+        xAxis: {
+            labels: {
+                style: {
+                    fontSize: '8px'
+                }
+            },
+            categories: ['Jan20', 'Feb20', 'Mar20', 'Apr20', 'May20', 'Jun20', 'Jul20', 
+            'Aug20', 'Sep20', 'Oct20', 'Nov20', 'Dec20', 'Jan21', 'Feb21', 'Mar21', 'Apr21',
+    'May21', 'Jun21', 'Jul21', 'Aug21', 'Sep21',
+    'Oct21', 'Nov21', 'Dec21',]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            style: {
+            fontSize: '15px'
+        },
+        formatter: function () {
+            return '<b>' + this.series.name + '</b><br/>' + this.point.category + '</b><br/>' +
+                'Total: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2) + 'hrs';
+        },
+            shared: false
+        },
+        plotOptions: {
+            column: {
+            //     dataLabels: {
+            //         style: {
+            //             	fontSize: '11px'
+            //             },
+            //     verticalAlign: 'top',
+            //     enabled: true,
+            // },
+                stacking: 'normal'
+            }
+        },
+        series: [
+                    {
+            name: 'Billable Project Hours',
+            showInLegend: false,
+            data: [{{ jan20_sum }}, {{ feb20_sum }}, {{ mar20_sum }}, {{ apr20_sum }}, {{ may20_sum }}, {{ jun20_sum }},
+            {{ jul20_sum }}, {{ aug20_sum }}, {{ sep20_sum }}, {{ oct20_sum }}, {{ nov20_sum }}, {{ dec20_sum }}, 
+            {{ jan21_sum }}, {{ feb21_sum }}, {{ mar21_sum }}, {{ apr21_sum }}, {{ may21_sum }}, {{ jun21_sum }},
+            {{ jul21_sum }}, {{ aug21_sum }}, {{ sep21_sum }}, {{ oct21_sum }}, {{ nov21_sum }}, {{ dec21_sum }} ],
+        color: '#93CD84',
+                },
+                ]
+            });
+</script>
+
+
+<!--Employee Manhour billable and non billable-->
+<script>
+    var categories = [
+    'Jan20', 'Feb20', 'Mar20', 'Apr20',
+    'May20', 'Jun20', 'Jul20', 'Aug20', 'Sep20',
+    'Oct20', 'Nov20', 'Dec20', 
+    'Jan21', 'Feb21', 'Mar21', 'Apr21',
+    'May21', 'Jun21', 'Jul21', 'Aug21', 'Sep21',
+    'Oct21', 'Nov21', 'Dec21',
+];
+
+
+
+Highcharts.chart('empmanhour2', {
+    chart: {
+        backgroundColor: '#FCFFC5',
+        height: 240,
+        type: 'column'
+    },
+    title: {
+        text: '<span style="font-size: 10px">2020 - 2021 Employee Man Hours</span>'
+    },
+    
+   
+    xAxis: [{
+        categories: categories,
+        reversed: false,
+        labels: {
+            style: {
+                    fontSize: '8px'
+                },
+            step: 1
+        },
+        
+    }, { // mirror axis on right side
+        opposite: true,
+        reversed: false,
+        categories: categories,
+        linkedTo: 0,
+        labels: {
+            style: {
+                    fontSize: '8px'
+                },
+            step: 1
+        },
+        
+    }],
+    yAxis: {
+        title: {
+            text: ''
+        },
+        labels: {
+            formatter: function () {
+                return Math.abs(this.value) ;
+            }
+        },
+        
+    },
+
+    plotOptions: {
+        
+        series: {
+            stacking: 'normal',
+            
+           
+        }
+    },
+
+    tooltip: {
+        style: {
+            fontSize: '15px'
+        },
+        formatter: function () {
+            return '<b>' + this.series.name + '</b><br/>' + this.point.category + '</b><br/>' +
+                'Total: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2) + 'hrs';
+        }
+    },
+
+    legend: {
+        itemStyle: {
+            fontSize: '10px'
+        }
+    },
+
+    series: [{
+        name: 'Direct Billable',
+        color: '#FFB278',
+        data: [
+            {{jan_billable}}, {{feb_billable}}, {{mar_billable}}, {{apr_billable}},
+            {{may_billable}}, {{jun_billable}}, {{jul_billable}}, {{aug_billable}},
+            {{sep_billable}}, {{oct_billable}}, {{nov_billable}}, {{dec_billable}},
+            {{jan21_billable}}, {{feb21_billable}},
+        ]
+    }, {
+        name: 'Indirect Non-Billable',
+        color: '#DED43C',
+        data: [
+            -{{jan_nonbill}}, -{{feb_nonbill}}, -{{mar_nonbill}}, -{{apr_nonbill}},
+            -{{may_nonbill}}, -{{jun_nonbill}}, -{{jul_nonbill}}, -{{aug_nonbill}},
+            -{{sep_nonbill}}, -{{oct_nonbill}}, -{{nov_nonbill}}, -{{dec_nonbill}},
+            -{{jan21_nonbill}}, -{{feb21_nonbill}},
+
+        ]
+    }]
+});
+
+</script>
+
+
+
+<script>
+    Highcharts.chart('pie', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Direct',
+                y: 71,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Indirect',
+                y: 18
+            }, {
+                name: 'Common',
+                y: 8
+            }, {
+                name: 'Project Asst.',
+                y: 6
+            }]
+        }]
+    });
+</script>
+
+
+<script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
+
+
+
+
+{% endblock %}

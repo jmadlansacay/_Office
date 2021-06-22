@@ -1,0 +1,308 @@
+{% extends 'ims_main/base.html' %}
+{% load static %}
+
+
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-4">
+        <div class="card" style="width:400px">
+            <div class="card-header">
+                All Areas - {{totalall}}
+            </div>
+            <div class="card-body">
+                <div id="all"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                COMMON - {{totalcommon}}
+            </div>
+            <div class="card-body">
+                <div id="COMMON"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br>
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                CO2 CAPTURE - {{totalcap}}
+            </div>
+            <div class="card-body">
+                <div id="CO2CAP"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                CO2 COMPRESSION - {{totalcom}}
+            </div>
+            <div class="card-body">
+                <div id="CO2COM"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                UNDERGROUND - {{totalug}}
+            </div>
+            <div class="card-body">
+                <div id="UG"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'ims_main/js/highcharts.src.js'%}"></script>
+
+<script>
+    // Radialize the colors
+    Highcharts.setOptions({
+        colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+            return {
+                radialGradient: {
+                    cx: 0.5,
+                    cy: 0.3,
+                    r: 0.7
+                },
+                stops: [
+                    [0, color],
+                    [1, Highcharts.color(color).brighten(-0.3).get('rgb')] // darken
+                ]
+            };
+        })
+    });
+
+    // Build the chart
+    Highcharts.chart('all', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Share',
+            data: {{ dataall| safe}}
+    }]
+    // series: [{
+    //     name: 'Share',
+    //     data: [
+    //         { name: 'Chrome', y: 61.41 },
+    //         { name: 'Internet Explorer', y: 11.84 },
+    //         { name: 'Firefox', y: 10.85 },
+    //         { name: 'Edge', y: 4.67 },
+    //         { name: 'Safari', y: 4.18 },
+    //         { name: 'Other', y: 7.05 }
+    //     ]
+    // }]
+});
+
+
+
+    Highcharts.chart('COMMON', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Share',
+            data: {{ datacommon| safe}}
+    }]
+    
+});
+
+
+
+    Highcharts.chart('CO2CAP', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Share',
+            data: {{ datacap| safe}}
+    }]
+    
+});
+
+
+
+Highcharts.chart('CO2COM', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Share',
+            data: {{ datacom| safe}}
+    }]
+    
+});
+
+
+
+Highcharts.chart('UG', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Share',
+            data: {{ dataug| safe}}
+    }]
+    
+});
+
+
+</script>
+
+
+
+
+{% endblock %}

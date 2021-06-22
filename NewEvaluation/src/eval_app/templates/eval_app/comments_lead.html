@@ -1,0 +1,395 @@
+{% extends 'eval_app/_base.html' %}
+{% load static %}
+
+
+
+{% block headblock %}
+<style>
+    input[type=radio] {
+        display: block;
+        margin: 2 auto;
+    }
+
+    ul li {
+        display: inline-block;
+    }
+</style>
+{% endblock %}
+
+
+<!-- employee = models.ForeignKey(AccountDetails, on_delete=models.CASCADE, to_field='employee_id')
+    yr = models.IntegerField(blank=True, null=True)
+    expectation = models.TextField(blank=True, null=True)
+    target_position = models.TextField(blank=True, null=True)
+    complaints = models.TextField(blank=True, null=True) -->
+
+
+{% block body%}
+<br>
+<br>
+{% load widget_tweaks %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.employee|attr:"hidden" }}
+    {{ form.yr|attr:"hidden" }}
+
+    <div class="row">
+        <div class="col-6">
+            <br>
+            <h1 class="m-0 text-dark">{{eval_udetails.last_name}}, {{eval_udetails.first_name}} - (
+                {{eval_udetails.nick_name}} )
+            </h1>
+        </div>
+        <div class="col-6">
+            <div class="float-right">
+                <div class="image">
+                    <img src="http://qg1703cm0163.mhi.co.jp:81/static/main_hr/img/{{eval_udetails.pic}}"
+                        class="img-circle elevation-1" alt="User Image" width="80" height="80">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+     <br>
+     <div class="row">
+        {{ form.employee|attr:"hidden" }}
+        {{ form.yr|attr:"hidden" }}
+
+
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">What do you expect from the company?</h3>
+                </div>
+                <div class="card-body">
+
+                    {{form.expectation|attr:"class:form-control"}}
+
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">What are your complaints with MHIAP Manila Office?</h3>
+                </div>
+                <div class="card-body">
+
+                    {{form.complaints|attr:"class:form-control"}}
+
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Do you accept oversea/domestic dispatch?</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                <b>ICT Japan</b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_japan|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+
+
+                        <div class="col-4">
+                            <div class="row">
+                                <b>ICT Singapore</b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_singapore|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <b>Other MHI in Philippines</b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_philippines|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                <b>(Site) US/Canada</b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_us_canada|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <b>(Site) North Europe</b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_north_europe|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <b>(Site) GPUFP Bangladesh</b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_bangladesh|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                <b>(Site) Russia Site</b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_russia|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <b>(Site) Africa </b>
+                            </div>
+                            <div class="row">
+                                {{form.dispatch_africa|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Willing <-------> Reluctant
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+        <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Do you feel fairness to all employees?</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <b>Fairness</b>
+                            </div>
+                            <div class="row">
+                                {{form.fairness_for_all|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Fair <-------> Unfair
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        If you feel unfair, please freely state in the comment box:
+                        {{form.fairness_for_all_txt|attr:"class:form-control"|attr:"rows:8"}}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+        <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Do you think you are well evaluated in terms of salary?</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <b>Evaluation</b>
+                            </div>
+                            <div class="row">
+                                {{form.terms_of_salary|attr:"class:mb-0 mt-1"}}
+                            </div>
+                            <div class="row">
+                                Fairly Evaluated <-------> Not well evaluated
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        If you feel unfair, please freely state in the comment box:
+                        {{form.terms_of_salary_txt|attr:"class:form-control"|attr:"rows:14"}}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Others</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <b>Have you ever browse internet (net surfing/SNS) before using company PC or your
+                                    private cellphone during working hour?</b>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-6">
+                                    {{form.internet_during_working_hrs|attr:"class:form-control"}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <b>If you find someone violating company rule/regulation, what will be your action?</b>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-6">
+                                    {{form.violation_action|attr:"class:form-control"}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <b>Do you share your knowledge to other co-workers?</b>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-6">
+                                    {{form.share_knowledge|attr:"class:mb-0 mt-0"}}
+                                    Willing <1-------4> Not to disclose
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <b>How do you think of yourself?</b>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-12">
+                                    {{form.think_yourself|attr:"class:mb-0 mt-0"}}
+                                    Team player/Harmony <-------> Stand Player/Non Harmony
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="card card-warning">
+                <div class="card-header">
+                    <h3 class="card-title">What is your target position in the company?</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            {{form.target_position|attr:"class:form-control"}}
+                        </div>
+                        {% if EmployeeCommentinstance.status == 'On-Going' %}
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-md btn-primary">Save</button>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="product-info">
+                                <span class="product-description">
+                                    Fill up status
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            {{form.status|attr:"class:form-control"}}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="product-info">
+                                <span class="product-description">
+                                    *Note: Changing fill up status to "Submitted" will disable future revisions.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

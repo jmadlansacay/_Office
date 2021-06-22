@@ -1,0 +1,684 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>MHIAP | Attendance</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'hrg_hr/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'hrg_hr/dist/css/adminlte.min.css' %}">
+
+
+
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .tree ul {
+            padding-top: 20px;
+            position: relative;
+
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li {
+            float: left;
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        /*We will use ::before and ::after to draw the connectors*/
+
+        .tree li::before,
+        .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 2px solid #020202;
+            width: 50%;
+            height: 20px;
+        }
+
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 2px solid #020202;
+        }
+
+        /*We need to remove left-right connectors from elements without 
+any siblings*/
+        .tree li:only-child::after,
+        .tree li:only-child::before {
+            display: none;
+        }
+
+        /*Remove space from the top of single children*/
+        .tree li:only-child {
+            padding-top: 0;
+        }
+
+        /*Remove left connector from first child and 
+right connector from last child*/
+        .tree li:first-child::before,
+        .tree li:last-child::after {
+            border: 0 none;
+        }
+
+        /*Adding back the vertical connector to the last nodes*/
+        .tree li:last-child::before {
+            border-right: 2px solid #020202;
+            border-radius: 0 5px 0 0;
+            -webkit-border-radius: 0 5px 0 0;
+            -moz-border-radius: 0 5px 0 0;
+        }
+
+        .tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+            -webkit-border-radius: 5px 0 0 0;
+            -moz-border-radius: 5px 0 0 0;
+        }
+
+        /*Time to add downward connectors from parents*/
+        .tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 2px solid #020202;
+            width: 0;
+            height: 20px;
+        }
+
+        .tree li a {
+            border: 2px solid #020202;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #666;
+            font-family: arial, verdana, tahoma;
+            font-size: 11px;
+            display: inline-block;
+
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        /*Time for some hover effects*/
+        /*We will apply the hover effect the the lineage of the element also*/
+        .tree li a:hover,
+        .tree li a:hover+ul li a {
+            background: #c8e4f8;
+            color: #000;
+            border: 1px solid #94a0b4;
+        }
+
+        /*Connector styles on hover*/
+        .tree li a:hover+ul li::after,
+        .tree li a:hover+ul li::before,
+        .tree li a:hover+ul::before,
+        .tree li a:hover+ul ul::before {
+            border-color: #94a0b4;
+        }
+    </style>
+</head>
+
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+            <div class="container">
+
+                <h1>GPUFP ATTENDANCE - {{dt}}</h1>
+
+            </div>
+
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a>&nbsp;/&nbsp;<a
+                            href="{% url 'change_password' %}">Change password</a>&nbsp;/&nbsp;<a
+                            href="{%url 'mylogout' %}">Logout</a></li>
+
+                </ol>
+            </div>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
+            <div class="content-header">
+                <!-- <font style="color:red">Red - Not in Office</font>&nbsp;&nbsp;&nbsp;<font style="color:green">Green - In Office</font>&nbsp;&nbsp;&nbsp;<font style="color:blue">Blue - Work from Home</font>   -->
+                <small class="badge badge-danger">Red - Not in Office</small> <small class="badge badge-success">Green -
+                    In Office</small>
+                <small class="badge badge-primary">Blue - Work from Home </small> <small
+                    class="badge badge-warning">Orange - Halfday/Late</small>
+            </div>
+
+            <!-- /.content-header -->
+
+            <!-- Main content 
+    /.content -->
+
+
+            <div class="container-fluid">
+                <!--
+    We will create a family tree using just.
+    The markup will be simple nested lists
+    -->
+                <div class="tree">
+                    <ul>
+                        <li>
+
+                            <a href="#">
+                                <h4>Project Lead</h4>
+                                <div class="form-group col-md-12">
+                                    <img src="/media/0111.jpg" class="img-fluid" alt="Snow"
+                                        style="border:2px solid {{e0111}}" height="40" width="40"><br>
+                                    <p style="color:{{e0111}}">Dave</p>
+                                </div>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/hrg_tm/attendance2/nh3/">
+                                        <h4>NH3-Area Lead</h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <img src="/media/0204.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0204}}" height="40" width="40"><br>
+                                                <p style="color:{{e0204}}">Bong</p>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <img src="/media/0207.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0207}}" height="40" width="40"><br>
+                                                <p style="color:{{e0207}}">Dino</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/hrg_tm/attendance2/nh3/">
+                                                <h6>Designer</h6>
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0221.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0221}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0221}}">Mel</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0117.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0117}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0117}}">Willy</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0116.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0116}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0116}}">Arnel</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    <a href="/hrg_tm/attendance2/nh3/">
+                                                        <h6>S3D Designer</h6>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0219.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0219}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0219}}">Joseph</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0215.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0215}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0215}}">Jessie</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0248.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0248}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0248}}">Edgar</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0263.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0263}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0263}}">Jun D.</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0262.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0262}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0262}}">JR</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0206.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0206}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0206}}">Daisy</p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/hrg_tm/attendance2/urea">
+                                        <h4>Urea-Area Lead</h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <img src="/media/0223.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0223}}" height="40" width="40"><br>
+                                                <p style="color:{{e0223}}">Neghs</p>
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/hrg_tm/attendance2/urea">
+                                                <h6>Designer</h6>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/0229.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0229}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0229}}">Woody</p>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/0269.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0269}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0269}}">Bong K.</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    <a href="/hrg_tm/attendance2/urea">
+                                                        <h6>S3D Designer</h6>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0259.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0259}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0259}}">Winda</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0252.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0252}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0252}}">Sancho</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/M032.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{em032}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{em032}}">Tumak</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0258.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0258}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0258}}">Renier</p>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/hrg_tm/attendance2/utility/">
+                                        <h4>Utility-Area Lead</h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <img src="/media/0216.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0216}}" height="40" width="40"><br>
+                                                <p style="color:{{e0216}}">Joemi</p>
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/hrg_tm/attendance2/utility/">
+                                                <h6>Designer</h6>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/0274.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0274}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0274}}">Dante</p>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/M031.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{em031}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{em031}}">Val</p>
+                                                    </div>
+
+                                                </div>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    <a href="/hrg_tm/attendance2/utility/">
+                                                        <h6>S3D Designer</h6>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0256.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0256}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0256}}">Ruel</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0271.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0271}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0271}}">Jordan</p>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <img src="/media/0208.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0208}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0208}}">Dom</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-6">
+                                                                <img src="/media/0226.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0226}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0226}}">Ronald</p>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <img src="/media/0268.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0268}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0268}}">Erick</p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/hrg_tm/attendance2/piperack">
+                                        <h4>Pipe-Area Lead</h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <img src="/media/0217.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0217}}" height="40" width="40"><br>
+                                                <p style="color:{{e0217}};">John</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/hrg_tm/attendance2/piperack">
+                                                <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designer
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/0211.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0211}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0211}}; ">Greg</p>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/0246.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0246}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0246}}; ">Sean</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    <a href="/hrg_tm/attendance2/piperack">
+                                                        <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S3D Designer
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-6">
+                                                                <img src="/media/0203.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0203}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0203}};">Bobet</p>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <img src="/media/0243.jpg" class="img-fluid" alt="Snow"
+                                                                    style="border:2px solid {{e0243}}" height="40"
+                                                                    width="40"><br>
+                                                                <p style="color:{{e0243}}; ">Loie</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+
+
+                                    </ul>
+                                </li>
+                                
+
+                                <li>
+
+                                    <a href="/hrg_tm/attendance2/spe">
+                                        <H4>SPE-Area Lead</H4>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <img src="/media/0222.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0222}}" height="40" width="40"><br>
+                                                <p style="color:{{e0222}}">Meong</p>
+                                            </div>
+                                        </div>
+                                    </a>
+
+
+                                    <ul>
+                                        <li>
+                                            <a href="/hrg_tm/attendance2/spe">
+                                                <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2D Engineer
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0257.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0257}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0257}}">Kat</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0235.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0235}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0235}}">Jas</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0205.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0205}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0205}}">Caren</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+
+                                        </li>
+
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="/hrg_tm/attendance2/pfa">
+                                        <h4>PFA</h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <img src="/media/0253.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0253}}" height="40" width="40"><br>
+                                                <p style="color:{{e0253}}">Patrick</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/hrg_tm/attendance2/pfa">
+                                                <h6>PFA Engineer </h6>
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0212.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0212}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0212}}">Hector</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/M022.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{em022}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{em022}}">Grace</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/M014.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{em014}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{em014}}">Jenny</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/0241.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0241}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0241}}">Krys</p>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <img src="/media/0213.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0213}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0213}}">Jean</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                                <li>
+                                    <a href="/hrg_tm/attendance2/s3d">
+                                        <h4>S3D Admin</h4>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <img src="/media/0202.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0202}}" height="40" width="40"><br>
+                                                <p style="color:{{e0202}}">Badeth</p>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <img src="/media/0254.jpg" class="img-fluid" alt="Snow"
+                                                    style="border:2px solid {{e0254}}" height="40" width="40"><br>
+                                                <p style="color:{{e0254}}">Jeannette</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/hrg_tm/attendance2/s3d">
+                                                <h6>Indirect Members </h6>
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0113.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0113}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0113}}">Rommel</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0250.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0250}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0250}}">Glai</p>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <img src="/media/0251.jpg" class="img-fluid" alt="Snow"
+                                                            style="border:2px solid {{e0251}}" height="40"
+                                                            width="40"><br>
+                                                        <p style="color:{{e0251}}">Rose</p>
+                                                    </div>
+                                                </div>
+
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script language="javascript">
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 30000);
+    </script>
+
+</body>
+
+</html>

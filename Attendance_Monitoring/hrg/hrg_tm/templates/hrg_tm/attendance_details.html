@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>AdminLTE 3 | Top Navigation</title>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'hrg_hr/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'hrg_hr/dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container">
+      <a href="../../index3.html" class="navbar-brand">
+        
+        <span class="brand-text font-weight-light">MHIAP</span>
+      </a>
+      
+      <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+        </ul>
+
+        <!-- SEARCH FORM -->
+        
+      </div>
+
+      <!-- Right navbar links -->
+      
+    </div>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+              {% for i in ulist %}
+            <h1 class="m-0 text-dark"> Attendance Details - {{i.nickname}} -  {{dt}} </h1>
+            {% endfor %}
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <div class="container">
+        <br>
+        <br>
+            <form method="POST">
+              {% csrf_token %}
+              
+              <div class="row">
+                <div class="col-md-6">
+
+                  <div class="card card-widget widget-user">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-info">
+                      <h2 class="widget-user-username">{{lastname}}, {{firstname}}</h2>
+                    </div>
+                   
+                    <div class="widget-user-image">
+                      <img class="img-circle elevation-2" src="{{picurl}}" alt="User Avatar" >
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-sm-4 border-right">
+                          <div class="description-block">
+                            <h5 class="description-header">Time In</h5>
+                            <span class="description-text">{{time_in}}</span>
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 border-right">
+                          <div class="description-block">
+                            <h5 class="description-header">Time Out</h5>
+                            <span class="description-text">{{time_out}}</span>
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4">
+                          <div class="description-block">
+                            <h3 class="description-header"></h3>
+                            <span class="description-text"></span>
+                          </div>
+                          <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                    </div>
+                  </div>
+                  <div class="card card-secondary">
+                    <div class="card-header">
+                      <h3 class="card-title">Message</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <p class="text-muted">
+                          {{msg}}
+                        </p>
+        
+                        <hr>
+                      {% if owner == 1 %}
+                     
+                      <a href="{% url 'msg_update' word=employeeid %}" class="btn btn-primary btn-sm">Update Message</a>
+                      {% else %}
+                        
+                      {% endif %}
+                      
+      
+                      
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Info</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+                      
+                      <div class="card-body">                                          
+                            
+                                          
+                        <label>Reason for leave/halfday/late</label>   
+                        {% if access == 1 %}
+                            <textarea class="form-control" rows="3" name="reason" id="reason"  >{{reason}}</textarea>
+                        {% else %}
+                          <p class="text-muted">
+                            {{ reason }}
+                          </p>
+                        {% endif %}
+                      </div>
+                      <!-- /.card-body -->
+      
+                      <div class="card-footer">
+                       
+                        {% if hd == 2 %}
+                          <select class="form-control col-sm-6" name="halfday" id="halfday">
+                            <option value="2" selected>Absent</option>
+                            <option value="1">Halfday/Late</option>
+                            <option value="0"></option>
+                          </select>
+                        {% elif hd == 1 %}
+                          <select class="form-control col-sm-6" name="halfday" id="halfday">
+                            <option value="2">Absent</option>
+                            <option value="1" selected>Halfday/Late</option>
+                            <option value="0"></option>
+                          </select>
+                        {% else %}
+                          <select class="form-control col-sm-6" name="halfday" id="halfday">
+                            <option value="2">Absent</option>
+                            <option value="1">Halfday/Late</option>
+                            <option value="0" selected></option>
+                          </select>
+                        {% endif %}
+                        <br> 
+                        {% if access == 1 %}
+                          
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        {% endif %}
+                        <a href="{% url 'attendance' 'ALL'%}" class="btn btn-default">Close</a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+            </form>  
+                
+         
+
+        </div>    
+        <!-- /.table-responsive -->
+        
+      </div>
+</div>
+
+
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      
+    </div>
+    <!-- Default to the left -->
+     Project -  
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'hrg_hr/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'hrg_hr/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'hrg_hr/dist/js/adminlte.min.js' %}"></script>
+
+
+</body>
+</html>

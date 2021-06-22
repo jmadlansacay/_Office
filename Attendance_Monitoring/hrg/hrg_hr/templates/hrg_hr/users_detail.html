@@ -1,0 +1,180 @@
+{% extends 'hrg_hr/master.html' %}
+{% load static %}
+
+
+{% block headblock %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 3 | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'hrg_hr/plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static 'hrg_hr/dl/css/ionicons.min.css'%}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'hrg_hr/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'hrg_hr/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'hrg_hr/dist/css/adminlte.min.css'%}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'hrg_hr/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+{% endblock %}
+
+
+
+{% block bodyblock%}
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">User</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">User detail</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+
+
+
+
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">User Details</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" action="{% url 'users_detail' pk=ulist.pk %}" method="post" enctype="multipart/form-data">
+              <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-1">
+                      <label for="pk">PK{{ulist.pk}}</label>
+                      <input type="text" class="form-control" id="pk" disabled="" value="{{ulist.pk}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="username" value="{{ulist.username}}">
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label for="email">Email</label>
+                        <input type="temailext" class="form-control" id="email" value="{{ulist.email}}">
+                      </div>
+                </div>
+                
+
+
+
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" value="{{ulist.last_name}}" >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" id="first_name" value="{{ulist.first_name}}" >
+                    </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="form-group col-md-2">
+                      <label for="last_name">Active</label>
+                      <select class="form-control" id="last_name">
+                        <option>True</option>
+                        <option>False</option>
+                      </select>
+                  </div>
+                  
+              </div>
+
+              <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="picture" >Picture</label>
+                    <input type="file" id="myfile" name="myfile" class="form-control" >
+                </div>
+                <div class="col-md-6">
+                                        
+                  <img style="display: inline-block; width:100px; height:100px;" src="{{udetail.pictureurl}}">
+                </div>
+                
+              </div>
+                
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+
+
+
+
+
+
+     
+      
+
+
+     
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+
+{% endblock %}
+
+
+
+{% block footerblock %}
+<script src="{% static 'hrg_hr/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'hrg_hr/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'hrg_hr/plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'hrg_hr/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'hrg_hr/dist/js/demo.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  bsCustomFileInput.init();
+});
+</script>
+
+{% endblock %}

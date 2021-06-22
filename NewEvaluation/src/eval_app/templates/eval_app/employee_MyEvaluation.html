@@ -1,0 +1,160 @@
+{% extends 'eval_app/_base.html' %}
+{% load static %}
+
+
+
+{% block headblock %}
+<style>
+    input[type=radio] {
+        display: block;
+        margin: 0 auto;
+    }
+    ul li {
+        display: inline-block;
+    }
+</style>
+{% endblock %}
+
+
+{% block body%}
+<br>
+<br>
+{% load widget_tweaks %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        {% if udetails.access.id == 5 or udetails.access.id == 4 %}
+        <div class="col-2">
+            <label>Initial Status</label>
+            {{form.user_submit|attr:"class:form-control"}}
+        </div>
+        {% endif %}
+        
+        {% if udetails.access.id == 5 or udetails.access.id == 4 %}
+        {% else %}
+        <div class="col-2">
+            <label>Lead Status</label>
+            {{form.lead_submit|attr:"class:form-control"}}
+        </div>
+        {% endif %}
+        <div class="text-dark col-8"><label>Rating Criteria</label>
+            <br>
+            <div class="row">
+                <div class="col-2">
+                    <label>1 - Poor</label>
+                </div>
+                <div class="col-2">
+                    <label>2 - Fair</label>
+                </div>
+                <div class="col-2">
+                    <label>3 - Good</label>
+                </div>
+                <div class="col-2">
+                    <label>4 - Very Good</label>
+                </div>
+                <div class="col-2">
+                    <label>5 - Excellent</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Work Attitude</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row col-sm-12 card-body">
+                        <div class="text-center col-md-6">
+                            {{form.time_panctualityr|attr:"hidden"}}
+                        </div>
+
+                        <div class="text-center col-md-6">Cooperativenes
+                            {{ form.cooperativeness}}
+                        </div>
+
+                        <div class="text-center col-md-6">Cost Saving Mind
+                            {{ form.costsaving}}
+                        </div>
+                        <div class="text-center col-md-6">Harmony
+                            {{ form.harmony}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Productivity</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row col-sm-12 card-body">
+                        <div class="text-center col-md-6">Speed
+                            {{ form.speed}}
+                        </div>
+                        <div class="text-center col-md-6">Accuracy & Quality
+                            {{ form.accqlty}}
+                        </div>
+                        <div class="text-center col-md-6">Work Efficiency
+                            {{ form.workeff}}
+                        </div>
+                        <div class="text-center col-md-6">PDCA Cycle
+                            {{ form.pdacycle}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Contributions to MHIAP</h3>
+                </div>
+                {{ form.employee|attr:"hidden" }}
+                {{ form.yr|attr:"hidden" }}
+                {{ form.period|attr:"hidden"}}
+                <div class="card-body">
+                    <div class="row col-sm-12 card-body">
+                        <div class="text-center col-sm-6">Loyalty etc.
+                            {{ form.loyalty}}
+                        </div>
+                        <div class="text-center col-sm-6">Team Player
+                            {{ form.team_player}}
+                        </div>
+                    </div>
+                    <div class="row col-sm-12 card-body">
+                        Contributions to MHIAP
+                        {{ form.contribution|attr:"class:form-control"|attr:"rows:4"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Personal Target Achievements</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row col-sm-12 card-body">
+                        {{ form.achievement.errors }}
+                        {{ form.achievement|attr:"class:form-control"|attr:"rows:10"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit" class="btn btn-md btn-primary">Save</button>
+        </div>
+    </div>
+    <br>
+    <br>
+</form>
+{% endblock %}

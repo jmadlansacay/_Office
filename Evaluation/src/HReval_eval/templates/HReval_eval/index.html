@@ -1,0 +1,230 @@
+{% extends 'HReval_eval/base.html'%}
+
+{% load static %}
+
+{% block head %}
+<link href='https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css' rel='stylesheet'>
+<!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+<link rel="stylesheet" href="{% static 'back/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'back/css/themes.css' %}">
+<link rel="stylesheet" href="{% static 'back/css/bootstrap.min.css' %}">
+<script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+
+<!--<img src="{% static 'back/img/placeholders/backgrounds/lock_full_bg.jpg' %}" alt="Login Full Background" class="full-bg animation-pulseSlow"> -->
+{% endblock %}
+
+
+{% block body %}
+
+<header class="navbar navbar-default">
+    <!-- Left Header Navigation -->
+    <ul class="nav navbar-nav-custom">
+        
+        <!-- END Main Sidebar Toggle Button -->
+
+        <!-- Template Options -->
+        <!-- Change Options functionality can be found in js/app.js - templateOptions() -->
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="gi gi-settings"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-custom dropdown-options">
+                <li class="dropdown-header text-center">Header Style</li>
+                <li>
+                    <div class="btn-group btn-group-justified btn-group-sm">
+                        <a href="javascript:void(0)" class="btn btn-primary" id="options-header-default">Light</a>
+                        <a href="javascript:void(0)" class="btn btn-primary" id="options-header-inverse">Dark</a>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <!-- END Template Options -->
+    </ul>
+    <!-- END Left Header Navigation -->
+
+
+    <!-- Right Header Navigation -->
+    <ul class="nav navbar-nav-custom pull-right">
+
+        <!-- User Dropdown -->
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="{% static 'back/img/placeholders/avatars/avatar2.jpg' %}" alt="avatar"> <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                <li class="dropdown-header text-center">Account</li>
+                <li>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="page_ready_user_profile.html">
+                        <i class="fa fa-user fa-fw pull-right"></i>
+                        Profile
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="changepass"><i class="fa fa-lock fa-fw pull-right"></i> Change Password</a>
+                    <a href="logout/"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a>
+                </li>
+                <li class="dropdown-header text-center">Activity</li>
+                <li>
+                    
+                </li>
+            </ul>
+        </li>
+        <!-- END User Dropdown -->
+    </ul>
+    <!-- END Right Header Navigation -->
+
+
+    <!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
+    <div id="modal-user-settings" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h2 class="modal-title"><i class="fa fa-pencil"></i> Change Passord</h2>
+                </div>
+                <!-- END Modal Header -->
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal form-bordered">
+                        {% csrf_token %}
+                        <fieldset>
+                            <legend>Vital Info</legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Username</label>
+                                <div class="col-md-8">
+                                    <p class="form-control-static">Admin</p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Password Update</legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="user-settings-password">New Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="user-settings-password" name="user-settings-password" class="form-control" placeholder="Please choose a complex one..">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="user-settings-repassword">Confirm New Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="user-settings-repassword" name="user-settings-repassword" class="form-control" placeholder="..and confirm it!">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group form-actions">
+                            <div class="col-xs-12 text-center">
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- END Modal Body -->
+            </div>
+        </div>
+    </div>
+    <!-- END User Settings -->
+
+
+
+
+</header>
+<!-- END Header -->
+
+
+
+<div class="container-fluid">
+    
+        <div class="header-section">
+                <!-- Main Title (hidden on small devices for the statistics to fit) -->
+                
+                <div class="content-header content-header-media">
+                    <div class="header-section ">
+                        <!-- <img src="{% static 'back/img/placeholders/avatars/avatar2.jpg' %}" alt="Avatar" class="pull-right img-circle"> -->
+                        <h1>Welcome</h1>
+                        <h3>{{ user.first_name }} {{ user.last_name }}<br><small>Have a good day / 良(よ)い一日(いちにち)を
+                            Yoi ichi nichi o</small></h3>
+                        <h3><small>Please Select / Search an employee to evaluate..</small></h3>
+                    </div>
+                    <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
+                    <img src="{% static 'back/img/placeholders/headers/widget1_header.jpg' %}"  alt="header image" class="animation-pulseSlow">
+                    
+                </div>
+        </div>
+
+    <div class="container-fluid">
+        {% if perm == '5' %}
+        <a href="{% url 'export_users_csv' %}">Export to excel</a>
+        {% endif %}
+        <table id="example" class=" display table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Employee Status</th>
+                    <th>Employee Type</th>
+                    <th>Initial Status</th>
+                    <th>Lead Status</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in hrmaster %}
+                <tr>
+                    <td>{{i.empl_eval.employee_id}}</td>
+                    <td>{{i.empl_eval.last_name}}, {{i.empl_eval.first_name}} ({{i.empl_eval.nickname}}) </td>
+                    <td>{{i.empl_eval.gender}}</td>
+                    <td>{{i.empl_eval.employee_status}}</td>
+                    <td>{{i.empl_eval.employee_type}}</td>
+                    <td>{{i.user_submit}}</td>
+                    <td>{{i.lead_submit}}</td>
+                    <td class="text-center">
+                        <a class="btn btn-info btn-sm" href="{% url 'evaluation' id=i.empl_eval.id %}">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Evaluate
+                        </a>
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<!-- Load and execute javascript code used only in this page -->
+<script src="{% static 'back/js/pages/index.js' %}"></script>
+<script>$(function(){ Index.init(); });</script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+
+<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+<script src="{% static 'back/js/vendor/jquery.min.js' %}"></script>
+<script src="{% static 'back/js/vendor/bootstrap.min.js' %}"></script>
+<script src="{% static 'back/js/plugins.js' %}"></script>
+<script src="{% static 'back/js/app.js' %}"></script>
+
+
+{% endblock %}
+

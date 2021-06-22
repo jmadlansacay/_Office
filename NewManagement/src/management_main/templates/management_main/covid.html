@@ -1,0 +1,396 @@
+{% extends 'management_main/base.html' %}
+{% load static %}
+{% load humanize %}
+
+
+{% block body %}
+
+<div >
+        <div class="card" style="background-color: rgb(228, 222, 208);">
+            <div><a   class="float-right"><h6><b>Click "X" button above to close</b> </h6></a></div>
+            
+            <div  style="background-color:#c5a552;" ><h6 class="float-left">Cases for NCR as of {% for i in overview %} {{i.date}} {% endfor %} (Bed Occupancy/Availability of Beds and Equipments is for Makati Med./St. Lukes/The Medical City)</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="card">
+                            <div class="card-header bg-dark" style="height: 4rem;">
+                                <h6>Total Cases</h6>
+                            </div>
+                            <div class="card-body" style="height: 5rem; background-color:#918dd5;">
+                                <div>
+                                    {% for i in overview %}
+                                    <h5>{{i.total_cases|intcomma}}</h5>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="card">
+                            <div class="card-header bg-dark" style="height: 4rem;">
+                                <h6 >Active</h6>
+                            </div>
+                            <div class="card-body" style="height: 5rem; background-color:#82b51d;">
+                                <div>
+                                    {% for i in overview %}
+                                    <h5>{{i.active_cases|intcomma}}</h5>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card">
+                            <div class="card-header bg-dark" style="height: 4rem;">
+                                <h6>Recovered</h6>
+                            </div>
+                            <div class="card-body" style="height: 5rem; background-color:#1db580;">
+                                <div>
+                                    {% for i in overview %}
+                                    <h5>{{i.recovered|intcomma}}</h5>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="card">
+                            <div class="card-header bg-dark" style="height: 4rem;">
+                                <h6>Died</h6>
+                            </div>
+                            <div class="card-body" style="height: 5rem; background-color:#7eeba2;">
+                                <div>
+                                    {% for i in overview %}
+                                    <h5>{{i.died|intcomma}}</h5>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for i in overview %}
+                    <div class="col-2">
+                        <div class="card">
+                            <div class="card-header bg-dark">
+                                <h6>Bed Occupancy</h6>
+                            </div>
+                            
+                            <div class="card-body" style="height: 6rem; background-color:#c6d565;">
+                                <li>
+                                    {{i.bed_occpuancy}} % <a class="float-right">{{i.bed_total}} Total</a>
+                                </li>
+                                
+                                <li>
+                                    Occupied <a class="float-right">{{i.bed_occ}}</a>
+                                </li>
+                                <li>
+                                    Vacant <a class="float-right">{{i.bed_vac}}</a>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-header bg-dark">
+                                <h6>Availability of Beds</h6>
+                            </div>
+                            <div class="card-body" style="height: 6rem; background-color:#c6d565;">
+                                <h6>
+                                    <div class="row">
+                    
+                                        <div class="col-4">
+                                            <ul class="list-group list-group-unbordered mb-3">
+                                                <li>
+                                                </li>
+                                                <li>
+                                                    ICU Beds
+                                                </li>
+                                                <li>
+                                                    Isolation Beds
+                                                </li>
+                                                <li>
+                                                    Ward Beds
+                                                </li>
+                                            </ul>
+                                        </div>
+                    
+                                        <div class="col-3">
+                                            <ul class="list-group list-group-unbordered mb-3">
+                                                <b>Occupied</b> </a>
+                                                <a>{{i.icu_occ}}</a>
+                                                <a>{{i.isolation_occ}} </a>
+                                                <a>{{i.ward_occ}} </a>
+                                            </ul>
+                                        </div>
+                    
+                                        <div class="col-3">
+                                            <ul class="list-group list-group-unbordered mb-3">
+                                                <b>Vacant</b></a>
+                                                <a>{{i.icu_vac}}</a>
+                                                <a>{{i.isolation_vac}}</a>
+                                                <a>{{i.ward_vac}}</a>
+                                            </ul>
+                                        </div>
+                    
+                                        <div class="col-2">
+                                            <ul class="list-group list-group-unbordered mb-3">
+                                                <a class="float-right"><b>Tota</b>l</a>
+                                                <a class="float-right">{{i.icu_total}}</a>
+                                                <a class="float-right">{{i.isolation_total}}</a>
+                                                <a class="float-right">{{i.ward_total}}</a>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </h6>
+                    
+                    
+                            </div>
+                    
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class=" bg-dark">
+                                <h6>Availability of Equipments</h6>
+                            </div>
+                            <div class="card-body" style="height: 3rem; background-color:#8ad565;">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                            <li>
+                                                Mechanical Ventilators
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-3">
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                            
+                                            Occupied : {{i.ventilator_occ}}
+                                        </ul>
+                                    </div>
+                                    <div class="col-3">
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                            
+                                            Vacant : {{i.ventilator_vac}}
+                                        </ul>
+                                    </div>
+                                    <div class="col-3">
+                                        <ul class="list-group list-group-unbordered mb-3">
+                                            {{i.ventilator_total}} Total
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+        
+                        </div>
+        
+                    </div>
+
+
+                    {% endfor %}
+
+                    
+        
+                </div>
+
+                <!--CHART ACTIVE CASES-->
+                <div class="row">
+                    <div class='col-3'>
+                        <div class="card" >
+                            <div style="background-color:#4086d0;">
+                                <b>Total Cases</b>
+                            </div>
+                            <div id="pie"></div>
+                        </div>
+                        
+                    </div>
+                    <div class='col-9'>
+                        <div class="card">
+                            <div style="background-color:#4086d0;"> 
+                                <b>Active Cases</b> 
+                            </div>
+                            <div id="activecases"></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                
+
+               
+            </div>
+
+        </div>
+        
+</div>
+
+{% endblock %}
+
+
+
+
+{% block js %}
+<script src="{% static 'management_main/js/highcharts.src.js'%}"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+
+<script>
+    Highcharts.chart('activecases', {
+    chart: {
+        backgroundColor: '#D3E0FF',
+        type: 'line',
+        height: 250,
+    },
+    title: {
+        text: ''
+    },
+    subtitle: {
+        text: ''
+    },
+    accessibility: {
+        announceNewData: {
+            enabled: true
+        }
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        tickInterval: 10,
+        max: 50000,
+        title: {
+            text: '',
+            
+     
+        }
+
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y:.1f}'
+            }
+        }
+    },
+
+    tooltip: {
+        style: {
+                fontSize: '10px'
+            },
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+    },
+
+    series: [
+        {
+            name: "Active Cases",
+            colorByPoint: true,
+            data: [{% for i in tracker %}
+                {
+                    name: "{{i.date}}",
+                    y: ({{i.active_cases}}),
+                },
+               
+            {% endfor %}]
+        }
+    ],
+    
+});
+        
+</script>
+
+<!--PieChart-->
+<script>
+// Make monochrome colors
+var pieColors = (function () {
+    var colors = [],
+        base = Highcharts.getOptions().colors[0],
+        i;
+
+    for (i = 0; i < 10; i += 1) {
+        // Start out with a darkened base color (negative brighten), and end
+        // up with a much brighter color
+        colors.push(Highcharts.color(base).brighten((i - 3) / 8).get());
+    }
+    return colors;
+}());
+
+    Highcharts.chart('pie', {
+    chart: {
+        plotBackgroundColor: '#D3E0FF',
+        plotBorderWidth: null,
+        plotShadow: false,
+        height: 250,
+        type: 'pie'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            size: 205,
+            allowPointSelect: true,
+            cursor: 'pointer',
+            colors: pieColors,
+            dataLabels: {
+                enabled: false,
+                style: {
+            	fontSize: '25px'
+            },
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+            
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -1,
+        y: 160,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || '#DEFEFF',
+        shadow: true
+    },
+    series: [{
+        name: 'Total',
+        colorByPoint: true,
+        showInLegend: true,
+        data: [{% for i in overview %}{
+            name: 'Active',
+            y: {{i.active_cases}},
+            sliced: true,
+            selected: true,
+        }, {
+            name: 'Recovered',
+            y: {{i.recovered}}
+        }, {
+            name: 'Died',
+            y: {{i.died}}
+        },{% endfor %} ]
+    }]
+});
+</script>
+
+
+{% endblock %}

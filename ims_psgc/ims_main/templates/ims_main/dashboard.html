@@ -1,0 +1,459 @@
+{% extends 'ims_main/base.html'%}
+{% load static %}
+
+
+{% block css %}
+<link href="{% static 'ims_main/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+<style>
+    .label {
+        color: white;
+        padding: 8px;
+    }
+
+    .designer {
+        background-color: #03fcf4;
+
+    }
+
+    .checker {
+        background-color: #1cf211;
+    }
+
+    .pfa {
+        background-color: #c70e80;
+    }
+
+    .arealead {
+        background-color: #fffb03;
+    }
+
+    img:hover {
+        opacity: 0.5;
+    }
+
+    .modal-header,
+    h4,
+    .close {
+        background-color: #5cb85c;
+        color: white !important;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .modal-footer {
+        background-color: #f9f9f9;
+    }
+
+    /* th {
+        font-size: 12px;
+    }
+
+    td {
+        font-size: 11px;
+
+    } */
+
+    /* #checker:hover {opacity: 0.5;}
+    #arealead:hover {opacity: 0.5;} */
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<form>
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-2">
+                            <img id="designer" src="{% static 'ims_main/img/NoPicMan.jpg' %}" class="rounded"
+                                style="border:4px solid  #03fcf4" width="75" height="75" name=""><br>3D Designer
+                        </div>
+                        <div class="col-2">
+                            <img id="checker" src="{% static 'ims_main/img/NoPicMan.jpg' %}" class="rounded"
+                                style="border:4px solid  #1cf211" width="75" height="75" name=""><br>Checker
+                        </div>
+                        <!-- <div class="col-2">
+                            <img id="pfa" src="{% static 'ims_main/img/NoPicMan.jpg' %}" class="rounded"
+                                style="border:4px solid  #c70e80" width="75" height="75" name=""><br>PFA
+                        </div> -->
+                        <div class="col-2">
+                            <img id="arealead" src="{% static 'ims_main/img/NoPicMan.jpg' %}" class="rounded"
+                                style="border:4px solid  #fffb03" width="75" height="75" name=""><br>Area Lead
+                        </div>
+                        <div class="col-2">
+                            <img id="sv" src="{% static 'ims_main/img/NoPicMan.jpg' %}" class="rounded"
+                                style="border:4px solid  #18056b" width="75" height="75" name=""><br>SV
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body" id="carddg">
+                    <table id="dg" class="cell-border" style="width:100%">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ICN</th>
+                                <th>Unit</th>
+                                <th>Area</th>
+                                <th>Line ID</th>
+                                <th>Issue Date</th>
+                                <th>NPD</th>
+                                <th>MHI</th>
+                                <th>Location</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in tblicn %}
+                            <tr id="row{{i.icn}}">
+                                <td style="font-size: 12px;">{{i.icn}}</td>
+                                <td style="font-size: 12px;">{{i.unit}}</td>
+                                <td style="font-size: 12px;">{{i.area}}</td>
+                                <td style="font-size: 12px;">{{i.line_id}}</td>
+                                <td style="font-size: 12px;">{{i.latest_issue_date|date:"m/d/Y"}}</td>
+                                <td style="font-size: 12px;">{{i.npd}}</td>
+                                <td style="font-size: 12px;">{{i.mhi_status}}</td>
+                                <td style="font-size: 12px;">{{i.location}}</td>
+                                <td style="font-size: 12px;"><a href="/media/pdf/7UG01-WF-431063.PDF" target="_blank">PDF</a> </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-6">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item" aria-current="page" id="lineid">ICN: Line Number:</li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <h5 class="card-header">Issue Date</h5>
+                            <div class="card-body">
+                                <table id="note1" class="cell-border" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Rev 0</th>
+                                            <th>Rev 1</th>
+                                            <th>Rev 2</th>
+                                            <th>Rev 3</th>
+                                            <th>Rev 4</th>
+                                            <th>Rev 5</th>
+                                            <th>Rev 6</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="note1body">
+                                        <tr id="note1row">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <h5 class="card-header">To Do List</h5>
+                            <div class="card-body">
+                                <table id="todolist" class="cell-border" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Items</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="todolistbody">
+                                        <tr id="todolistrow">
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <h5 class="card-header">System Check</h5>
+                            <div class="card-body">
+                                <table id="systemcheck" class="cell-border" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Piperun</th>
+                                            <th>Item</th>
+                                            <th>Source</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="systemcheckbody">
+                                        <tr id="systemcheckrow">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <h5 class="card-header">Hold</h5>
+                            <div class="card-body">
+                                <table id="hold" class="cell-border" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Items</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="holdbody">
+                                        <!-- <tr id="holdrow">
+                                            <td>PRDB</td>
+                                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dol</td>
+                                        </tr> -->
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        {% include 'ims_main/modalpass.html' %}
+
+    </div>
+
+</form>
+
+
+
+{% endblock %}
+
+
+
+
+{% block js %}
+
+
+<script src="{% static 'ims_main/js/jquery.dataTables.min.js' %}"></script>
+<script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+</script>
+<script>
+    $(document).ready(function () {
+        $(".card-body").css("background", "#72A2C0");
+        $(".card-header").css("background", "#192E5B");
+        $(".card-header").css("color", "#ffffff");
+        var icn;
+        var rw;
+        var table = $('#dg').DataTable({
+            "scrollY": "475px",
+            "scrollCollapse": false,
+            "paging": false
+        });
+
+        $('#note1').DataTable({
+            "scrollY": "35px",
+            "scrollCollapse": false,
+            "paging": false,
+            "info": false,
+            "searching": false,
+
+        });
+        $('#todolist').DataTable({
+            "scrollY": "100px",
+            "scrollCollapse": false,
+            "paging": false,
+            "info": false,
+            "searching": false,
+
+        });
+        $('#systemcheck').DataTable({
+            "scrollY": "100px",
+            "scrollCollapse": false,
+            "paging": false,
+            "info": false,
+            "searching": false,
+
+        });
+        $('#hold').DataTable({
+            "scrollY": "125px",
+            "scrollCollapse": false,
+            "paging": false,
+            "info": false,
+            "searching": false,
+
+        });
+
+
+        // click table row event
+        $('#dg tbody').on('click', 'tr', function (e) {
+
+            var data = table.row(this).data();
+            // alert( 'You clicked on '+data[0]+'\'s row' );
+            // <li class="breadcrumb-item active" aria-current="page">ICN: ' + data[0] + '  LINE NO: ' + data[2] + '-' + data[3] + '</li>
+            $('#lineid').replaceWith('<li class="breadcrumb-item" aria-current="page" id="lineid">ICN: '
+                + data[0] + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LINE NO: ' + data[2] + '-' + data[3] + '</li>');
+            icn = data[0];
+            $.ajax({
+                url: '/ims/dashboard/getpic/' + icn,
+                type: "POST",
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function (data) {
+                    document.getElementById("designer").src = "{% static 'ims_main/img/' %}" + data.designer;
+                    document.getElementById("designer").name = data.des_name;
+                    document.getElementById("checker").src = "{% static 'ims_main/img/' %}" + data.checker;
+                    document.getElementById("checker").name = data.checker_name;
+                    document.getElementById("arealead").src = "{% static 'ims_main/img/' %}" + data.arealead;
+                    document.getElementById("arealead").name = data.arealead_name;
+                    document.getElementById("sv").src = "{% static 'ims_main/img/' %}" + data.sv;
+                    document.getElementById("sv").name = data.sv_name;
+                    $('#note1row').replaceWith('<tr id="note1row"><td>' + data.rev0 + '</td><td>' + data.rev1 + '</td><td>' + data.rev2 + '</td>' +
+                        '<td>' + data.rev3 + '</td><td>' + data.rev4 + '</td><td>' + data.rev5 + '</td><td>' + data.rev6 + '</td></tr>');
+                }
+            })
+
+            //selection in datatable
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+
+        // click designer picture event
+        $('#designer').click(function () {
+            $('#myModaldesigner').modal();
+        });
+
+        // click checker picture event
+        $('#checker').click(function () {
+            $("#myModalchecker").modal();
+
+        });
+
+        // click area lead picture event
+        $('#arealead').click(function () {
+            $("#myModalarealead").modal();
+        });
+
+        // click area lead picture event
+        $('#sv').click(function () {
+            $("#myModalsv").modal();
+        });
+
+
+        function changelocation(urlsource) {
+
+            $.ajax({
+                url: urlsource,
+                type: "POST",
+                headers: { 'X-CSRFToken': csrftoken },
+                success: function (data) {
+                    console.log(data)
+                    $('#dg').DataTable().row('#row' + icn).remove().draw();
+                    $('#lineid').replaceWith('<li class="breadcrumb-item" aria-current="page" id="lineid">ICN: '
+                        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LINE NO: </li>');
+                    document.getElementById("designer").src = "{% static '/ims_main/img/NoPicMan.jpg' %}";
+                    document.getElementById("designer").name = "";
+                    document.getElementById("checker").src = "{% static '/ims_main/img/NoPicMan.jpg' %}";
+                    document.getElementById("checker").name = "";
+                    document.getElementById("arealead").src = "{% static '/ims_main/img/NoPicMan.jpg' %}";
+                    document.getElementById("arealead").name = "";
+                    document.getElementById("sv").src = "{% static '/ims_main/img/NoPicMan.jpg' %}";
+                    document.getElementById("sv").name = "";
+                    $('#note1row').replaceWith('<tr id="note1row"><td>-</td><td>-</td><td>-</td>' +
+                        '<td>-</td><td>-</td><td>-</td><td>-</td></tr>');
+                }
+            });
+        }
+
+
+
+
+        // click designer modal form
+        $('.modaldesigner').click(function (e) {
+            changelocation('/ims/icn/change_location/' + icn + '/' + e.target.id)
+            $("#myModaldesigner").modal('toggle');
+        });
+
+        // click checker modal form
+        $('.modalchecker').click(function (e) {
+            changelocation('/ims/icn/change_location/' + icn + '/' + e.target.id)
+            $("#myModalchecker").modal('toggle');
+
+
+        });
+
+        // click checker modal form
+        $('.modalarealead').click(function (e) {
+            // changelocation('/ims/icn/change_location/'+icn+'/'+e.target.id)
+            changelocation('/ims/icn/change_location/' + icn + '/' + e.target.id)
+            $("#myModalarealead").modal('toggle');
+        });
+
+
+
+        // click checker modal form
+        $('.modalsv').click(function (e) {
+            // changelocation('/ims/icn/change_location/'+icn+'/'+e.target.id)
+            changelocation('/ims/icn/change_location/' + icn + '/' + e.target.id)
+            $("#myModalsv").modal('toggle');
+        });
+
+
+    });
+
+</script>
+
+
+
+{% endblock %}

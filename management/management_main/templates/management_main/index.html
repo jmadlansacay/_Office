@@ -1,0 +1,153 @@
+{% extends 'management_main/base.html' %}
+{% load static %}
+
+
+{% load static %}
+{% block body %}
+<div class="row">
+
+    <div class="col-2">
+        <div class="card h-100 text-white ">
+            <div class="card ">
+                <div class="card-header bg-secondary">Employees (Head Count)</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="bg-info">Project</th>
+                                    <th class="bg-info">Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in empl %}
+                                <tr>
+                                    <td>{{i.project__name}}</td>
+                                    <td><a href="{% url 'main-employees' i.project__name %}">{{i.cnt}}</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td class="bg-info">Total</td>
+                                    <td class="bg-info"><a href="{% url 'main-employees' 'ALL' %}">{{empl_total}}</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="card-footer bg-secondary">Footer</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-6">
+        <div class="card h-80 text-white ">
+            <div class="card">
+                <div class="card-header bg-secondary">Manhours
+                    <div class="float-right">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn bg-secondary btn-sm dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                2020
+                            </button>
+                            <div class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item bg-secondary" href="#">2019</a>
+                                <a class="dropdown-item bg-secondary" href="#">2020</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="container"></div>
+
+                </div>
+                <div class="card-footer bg-secondary">Footer</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="tvBackgroundContainer"></div>
+    <div class="tvimagesContainer" style="width: 255px; height: 128px;"><canvas class="tabCanvas tab-widget"
+            style="display: block; width: 255px; height: 128px;" width="255" height="128"></canvas><canvas
+            class="tabCanvas tab-widget"
+            style="display: block; position: absolute; left: 0px; top: 0px; width: 255px; height: 128px;" width="255"
+            height="128"></canvas></div>
+    <div class="tvdrag" style="display: none;">
+        <div class="tvdrag_image" style="display: none;"></div>
+        <div class="tvdrag_mask" style="display: none;"></div>
+    </div>
+    <div class="tvdrag" style="display: none;"></div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'management_main/js/highcharts.src.js'%}"></script>
+<script type="text/javascript" src="https://public.tableau.com/vizql/v_202042011171741/javascripts/ViewerBootstrap.js"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://public.tableau.com/vizql/v_202042011171741/javascripts/jquery-3.0.0.min.js"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://public.tableau.com/vizql/v_202042011171741/javascripts/mscorlib.min.js"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://public.tableau.com/vizql/v_202042011171741/javascripts/jsstrings_en.js"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://public.tableau.com/vizql/v_202042011171741/javascripts/messages.en_US.js"
+    crossorigin="anonymous"></script>
+<script type="text/javascript"
+    src="https://public.tableau.com/vizql/v_202042011171741/javascripts/formatters-and-parsers.en_US.js"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://public.tableau.com/vizql/v_202042011171741/javascripts/vqlweb.js"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://public.tableau.com/vizql/v_202042011171741/javascripts/require.min.js"
+    crossorigin="anonymous"></script>
+
+<script>
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Stacked column chart'
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', "Dec"]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+            shared: true
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal'
+            }
+        },
+        series: [
+            {% for project in projecthours %}
+                    {
+            name: '{{project.project.name}}',
+            data: [{{ project.jan_hrs }}, {{ project.feb_hrs }}, {{ project.mar_hrs }}, {{ project.apr_hrs }}, {{ project.may_hrs }}, {{ project.jun_hrs }},
+        {{ project.jul_hrs }}, {{ project.aug_hrs }}, {{ project.sep_hrs }}, {{ project.oct_hrs }}, {{ project.nov_hrs }}, {{ project.dec_hrs }}],
+        color: '{{project.project.color}}',
+                },
+        {% endfor %}
+                ]
+            });
+
+</script>
+
+{% endblock %}

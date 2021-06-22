@@ -1,0 +1,75 @@
+{% extends 'computers_app/_base.html' %}
+{% load static %}
+
+
+
+
+
+{% block mainblock %}
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <a href="{% url 'table' 'all' %}"><h6 class="m-0 font-weight-bold text-primary">Reset</h6></a>
+    
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="tblLR" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Item Code</th>
+            <th>Model</th>
+            <th>Device Name</th>
+            <th>Serial Number</th>
+            <th>Status</th>
+            <th>User</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Item Code</th>
+            <th>Model</th>
+            <th>Device Name</th>
+            <th>Serial Number</th>
+            <th>Status</th>
+            <th>User</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for i in cinv %}
+          <tr>
+            <td><a href="{% url 'item' i.id %}">{{i.item_code}}</a></td>         
+            <td>{{i.item_model}}</td>
+            <td>{{i.device_name}}</td>
+            <td>{{i.serial_number}}</td>
+            <td>{{i.item_status}}</td>
+            <td>{{i.item_user}}</td>
+          </tr>
+          {% endfor%}
+          
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{% block jsblock %}
+<script src="{% static 'computers_app/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'computers_app/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'computers_app/js/demo/datatables-demo.js' %}"></script>
+
+<script>
+  $('#tblLR').DataTable({
+                "pageLength": 50,
+                "autoWidth":false,
+                "search": {
+                    "search": "{{mdl}}"
+                }
+            }); 
+</script>
+
+{% endblock %}
