@@ -5,11 +5,16 @@ from eval_main.models import MainHrHrMaster
 from .models import EmployeeEval, EvaluationCriteria, Evaluation, Comments
 from eval_app.forms import EmployeeEvalForm, EvaluationForm, CommentsForm
 from django.forms import inlineformset_factory, modelformset_factory
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.contrib.staticfiles.storage import staticfiles_storage
 from openpyxl import Workbook, load_workbook
 from openpyxl.writer.excel import save_virtual_workbook
 from openpyxl.styles import PatternFill
+import io
+
+
+
+
 # Create your views here.
 
 
@@ -512,9 +517,8 @@ def HrSync(request):
 
 
 
-
-
 def WriteToExcel(request, idno):
+
 
     context = {}
     uname = getuname(request)
@@ -597,3 +601,50 @@ def WriteToExcel(request, idno):
     response = HttpResponse(content=save_virtual_workbook(wb), content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename=' + idno + '.xlsx'
     return response
+
+
+
+def CommentsPDF(request):
+    context = {}
+    uname = getuname(request)
+    udetails = AccountDetails.objects.get(mhi_id=uname)
+    context.update({'udetails' : udetails})
+    evaluation_period = EvaluationPeriod.objects.get()
+    context.update({'udetails' : udetails})
+    context.update({'loc' : 'Comments       ( '+ str(evaluation_period.yr) + ' )'})
+    if len(MainHrHrMaster.objects.using('main').filter(mhi_id=uname)) != 0:
+        umaster = MainHrHrMaster.objects.using('main').get(mhi_id=uname)
+        context.update({'umaster' : umaster})
+
+    if udetails.access.id  != 2 :
+        context.update({'error' : 'You are not allowed to access this site'})
+        return render(request,'eval_app/error.html',context)
+
+    C = Comments.objects.filter(yr=evaluation_period.yr).order_by('employee__nick_name')
+   
+    buffer = io.BytesIO()
+
+
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    for i in C:
+        
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+        p.drawString(10, 800, i.employee.nick_name)
+        p.drawString(10, 700, i.complaints)
+
+    # Close the PDF object cleanly, and we're done.
+        p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+
+
+
+    
