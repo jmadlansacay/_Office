@@ -18,6 +18,6 @@ urlpatterns = [
     path('comments/', views.CommentsList, name='eval-Comments'),
     path('comments/<str:idno>', views.CommentLead, name='eval-CommentLead'),
     path('excel/<str:idno>', views.WriteToExcel, name='eval-WriteToExcel'),
-
+    path('commentspdf/', views.CommentsPDF, name='eval-CommentsPDF')
     
 ]
