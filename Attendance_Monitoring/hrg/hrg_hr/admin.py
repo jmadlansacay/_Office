@@ -12,6 +12,7 @@ class user_detailView(admin.ModelAdmin):
     def firstname(self,obj):
         return obj.mhiid.first_name
 
+    
 
 admin.site.register(user_detail,user_detailView)
 

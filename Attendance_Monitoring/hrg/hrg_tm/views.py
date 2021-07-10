@@ -5,6 +5,7 @@ from hrg_hr.models import user_detail, tblmaster, intro
 from hrg_tm.models import *
 import datetime
 from datetime import date
+import time
 from django.http import JsonResponse
 import json
 
@@ -40,9 +41,14 @@ def attendance(request, word):
     color = 'red'
     dt=datetime.date.today()
     
+    t = time.localtime()
+    current_time = time.strftime("%H:%M:%S", t)
+    time_in ="19:00:00"
+
     
     for i in empllist:
         color = 'red'
+        
         
 
         if len(transaction_info.objects.filter(employeeid=i.employeeid).filter(timesheetdate=dt).filter(halfday=1)) != 0:
@@ -61,7 +67,19 @@ def attendance(request, word):
         if len(user_detail.objects.filter(mhiid_id=i.mhiid).filter(remarks='WFH')) != 0 :
             color = 'blue'
             
+        if len(user_detail.objects.filter(mhiid_id=i.mhiid).filter(remarks='NS')) != 0 :
+            color = '#6610f2'
+
+            if current_time > time_in:
+                if len(transacations.objects.filter(employeeid=i.employeeid).filter(timesheetdate=dt).filter(inout=0)) != 0 :
+                    color = 'green'
+            
+                if len(transacations.objects.filter(employeeid=i.employeeid).filter(timesheetdate=dt).filter(inout=1)) != 0 :          
+                    color = 'red'
+
+
         
+
         if i.dateemployed != 'None':           
             dy = days_between(i.dateemployed,dt)
         else:
@@ -71,6 +89,10 @@ def attendance(request, word):
             newemp = 'new'
         else:
             newemp = 'old'
+
+
+
+        
 
         attend.append([i.id,i.nickname,i.pictureurl,color,newemp])
 
@@ -712,6 +734,9 @@ def attendance_api(request, word):
 
         if len(user_detail.objects.filter(mhiid_id=i.mhiid).filter(remarks='WFH')) != 0 :
             color = 'blue'
+
+        if len(user_detail.objects.filter(mhiid_id=i.mhiid).filter(remarks='NS')) != 0 :
+            color = '#6610f2'
             
         
         if i.dateemployed != 'None':           
