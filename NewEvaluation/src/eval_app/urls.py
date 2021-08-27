@@ -14,6 +14,7 @@ urlpatterns = [
     path('myskills/', views.MySkills, name='eval-MySkills'),
     path('skills/', views.SkillList, name='eval-Skills'),
     path('skills/<str:idno>', views.SkillLead, name='eval-SkillLead'),
+    path('skills_export/export', views.export_users_csv2, name="export_skills"),
     path('mycomments/', views.MyComments, name='eval-MyComments'),
     path('comments/', views.CommentsList, name='eval-Comments'),
     path('comments/<str:idno>', views.CommentLead, name='eval-CommentLead'),

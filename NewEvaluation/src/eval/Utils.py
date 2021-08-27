@@ -12,7 +12,7 @@ def getuname(request):
     # uname = 'U303140' # otep
     #uname = 'U303147' # Dino 
     #uname ='U303360' # sir jess
-    #uname = 'M143202' # Nada
+    uname = 'M143202' # Nada
     #uname = 'Q033444'
     return(uname)
 

@@ -10,6 +10,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from openpyxl import Workbook, load_workbook
 from openpyxl.writer.excel import save_virtual_workbook
 from openpyxl.styles import PatternFill
+import xlwt
 import io
 
 
@@ -368,8 +369,6 @@ def MyComments(request):
     evaluation_period = EvaluationPeriod.objects.get()
     context.update({'udetails' : udetails})
     context.update({'loc' : 'My Comments       ( '+ str(evaluation_period.yr) + ' )'})
-
-
     
     
     if len(MainHrHrMaster.objects.using('main').filter(mhi_id=uname).exclude(employee_status='Admin')) == 0:
@@ -644,6 +643,78 @@ def CommentsPDF(request):
     # present the option to save the file.
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+
+
+def export_users_csv2(request):
+
+    
+    uname = getuname(request)
+
+    # user = UserDetail.objects.get(user__username=uname)
+    skilltree = AccountDetails.objects.get(mhi_id=uname)
+    
+    print(skilltree.access.id)
+    if skilltree.access.id == 1:
+        return redirect('error')
+    elif skilltree.access.id==2:
+        return redirect('error')
+    elif skilltree.access.id==3:
+        return redirect('error')
+    elif skilltree.access.id==4:
+        employees = AccountDetails.objects.filter(skill_set='OPERATION')
+    elif skilltree.access.id==7:
+        
+        if skilltree.employee_id == '0018':
+            employees = AccountDetails.objects.exclude(employee_id='0018')
+        else:
+            employees = AccountDetails.objects.filter(skill_set='OPERATION').exclude(employee_id='0018')
+
+    # return redirect ('error')
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="users.xls"'
+  
+
+    wb = xlwt.Workbook(encoding='utf-8')
+
+    for i in employees:
+        print(i.nick_name)
+        ws = wb.add_sheet(i.nick_name)
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+
+        ws.write(row_num, 0, i.last_name+', '+i.first_name+' ('+i.nick_name+')', font_style)
+
+        row_num += 2
+        rows = Evaluation.objects.filter(employee_id=i.employee_id)
+        for a in rows:   
+            ws.write(row_num, 1, 'Self', font_style)
+            ws.write(row_num, 2, str(a.area_lead), font_style)
+            ws.write(row_num, 3, str(a.project_lead), font_style)
+            ws.write(row_num, 4, str(a.manager), font_style)
+            break
+
+        row_num += 1
+        columns = ['What', 'Skill Level', 'Skill Level','Skill Level', 'Skill Level', 'Action']
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+    
+        
+        rows = Evaluation.objects.filter(employee_id=i.employee_id).values_list('criteria__description','self_rating','area_lead_rating','project_lead_rating', 'manager_rating', 'actions')
+    
+        
+        for row in rows:
+            row_num += 1
+            for col_num in range(len(row)):
+                ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+    return response
 
 
 
