@@ -9,10 +9,11 @@ def getuname(request):
     uname = 'U292987' # kameda
     # uname = 'UT99548' # sir dave
     uname = 'Q034800'
+    uname ='M139004'
     # uname = 'U303140' # otep
     #uname = 'U303147' # Dino 
     #uname ='U303360' # sir jess
-    uname = 'M143202' # Nada
+    #uname = 'M143202' # Nada
     #uname = 'Q033444'
     return(uname)
 

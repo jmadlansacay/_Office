@@ -677,7 +677,7 @@ def export_users_csv2(request):
     wb = xlwt.Workbook(encoding='utf-8')
 
     for i in employees:
-        print(i.nick_name)
+        
         ws = wb.add_sheet(i.nick_name)
 
         # Sheet header, first row

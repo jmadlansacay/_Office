@@ -83,8 +83,8 @@ DATABASES = {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'YEARLY_EVAL',
         'USER': 'sa',
-        'PASSWORD': '_SQLadmin01',
-        'HOST': 'localhost',
+        'PASSWORD': '_ITadmin01',
+        'HOST': 'QG1703CM0220',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 11 for SQL Server',
