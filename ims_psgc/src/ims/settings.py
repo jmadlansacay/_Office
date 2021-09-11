@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'IMS_PSGC',
         'USER': 'sa',
         'PASSWORD': '_SQLadmin01',
-        'HOST': 'localhost',
+        'HOST': '10.113.181.20\TEST',
         'PORT': '',
 
         'OPTIONS': {
